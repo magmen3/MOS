@@ -1,0 +1,13 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/combine/emblems/prison_emblem"
+	$envmapmask "models/combine/emblems/shared_emblem_spec"
+	$alphatest 1
+	$Phong 1
+	$Phongexponettexture "models/combine/shared/Phongexponent"
+	$Phongboost 0.2
+	$Phongalbedotint 0.2
+	$Phongfresnelranges "[0.5 0.5 0.5]"
+	$ambientocclusion 1
+	$blendtintbybasealpha 0
+}

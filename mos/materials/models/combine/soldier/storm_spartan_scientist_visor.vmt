@@ -1,0 +1,18 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/combine/soldier/storm_spartan_scientist_visor_diff"
+	"$bumpmap" "models/combine/soldier/storm_spartan_scientist_helmet_normal"
+	"$envmapmask" "models/combine/soldier/storm_spartan_scientist_helmet_spec"
+	"$envmap"	"env_cubemap"
+	"$envmaptint"	"[1.2 0 0]"
+
+	$Normalmapalphaenvmapmask 1	
+
+    $phong 1
+	// $phongexponent 7
+	$phongboost	15
+	$phongalbedotint 1
+	$phongfresnelranges	"[0.3 0.3 0.3]"
+	$blendtintbybasealpha 1
+	$ambientocclusion 1
+}

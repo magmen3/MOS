@@ -1,0 +1,9 @@
+"UnlitGeneric"
+{
+	$basetexture "models/combine/prisonsoldier/glow_shade"
+	$selfillum 1024
+	$detail "models/combine/prisonsoldier/glow_diff"
+	$detailscale 1
+	$detailblendfactor 3
+	$detailblendmode 5
+}

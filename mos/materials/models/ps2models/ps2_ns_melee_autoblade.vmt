@@ -1,0 +1,11 @@
+"VertexLitGeneric"
+{
+    "$basetexture" "models/ps2models/ps2_ns_melee_autoblade"
+	"$bumpmap" "models/ps2models/ps2_ns_melee_autoblade_n"
+	"$phong" 1
+	"$phongexponent" 1
+	"$phongexponenttexture" "models/ps2models/ps2_ns_melee_autoblade_s"
+	"$phongboost"	"1.0"
+	"$phongfresnelranges"	"[0 0.5 1]"
+	"$nocull" "1"
+}

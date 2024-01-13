@@ -1,0 +1,13 @@
+"VertexlitGeneric"
+{
+"$basetexture" "models/combine/prisonsoldier/storm_spartan_techsuit_diff"
+"$bumpmap" "models/combine/prisonsoldier/storm_spartan_techsuit_normal"
+$Normalmapalphaenvmapmask 1
+"$phong" 1
+"$phongboost" "1.75"
+"$phongexponent" "10"
+"$phongtint" "[1 .85 .85]"
+"$phongfresnelranges" "[.05 .05 10]"
+$blendtintbybasealpha 1
+$ambientocclusion 1
+}

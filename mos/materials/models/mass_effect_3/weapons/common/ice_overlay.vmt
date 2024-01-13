@@ -1,0 +1,13 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/mass_effect_3/weapons/common/ice_overlay"
+	"$bumpmap" "models/mass_effect_3/weapons/common/ice_overlay_nrm"
+	"$normalmap" "models/mass_effect_3/weapons/common/ice_overlay_nrm"
+	"$surfaceprop" "ice"
+                "$envmap" "env_cubemap" 
+                "$envmaptint" "[1 1 3]"
+	"$phong"		"1"
+	"$phongexponent"	"6"
+	"$phongboost"	"1.5"
+	"$phongtint"	"{125 185 200}"
+}

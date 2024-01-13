@@ -1,0 +1,9 @@
+"UnlitGeneric"
+{
+	"$basetexture" "models/mass_effect_3/weapons/heavy_weapons/missile_launcher/Holomod_01_Tex1"
+	"$bumpmap" "models/mass_effect_3/weapons/heavy_weapons/missile_launcher/WPN_HVYd_Norm"
+//	$lightwarptexture		 "models/mass_effect_3/weapons/shared/lightwrap_metallic"
+	"$color2"		"[1 .85 .15]"
+	"$additive"			1
+	"$nocull"				1
+}

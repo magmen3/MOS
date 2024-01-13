@@ -1,0 +1,11 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/combine/prisonsoldier/storm_unsc_decals_graphics_diff"
+	$alphatest 1
+	$Phong 1
+	$Phongexponettexture "halo4/spartans/shared/Phongexponent"
+	$Phongboost 0.2
+	$Phongalbedotint 0.2
+	$Phongfresnelranges "[0.5 0.5 0.5]"
+	$ambientocclusion 1
+}

@@ -1,0 +1,26 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/mass_effect_3/weapons/assault_rifles/valkyrie/WPN_ASLl_Diff"
+	"$bumpmap" "models/mass_effect_3/weapons/assault_rifles/valkyrie/WPN_ASLl_Norm"
+//	$lightwarptexture		 "models/mass_effect_3/weapons/shared/lightwrap_metallic"
+	"$color2"		"[.9 .9 .9]"
+	$model				 1
+	$phong				1
+	$phongexponenttexture	"models/mass_effect_3/weapons/shared/albedo_tintdefine"
+	$phongdisablehalflambert 	1
+	$phongboost		18
+	$phongexponent		24
+	$phongalbedotint 	1
+	$phongfresnelranges	"[.3 4 8]"
+	$phongwarptexture "models/mass_effect_3/weapons/shared/phongwarp_metal2" 
+	$rimlight 1
+	$rimlighexponent 25
+	$rimlightboost 0.5
+	$emissiveBlendEnabled 1
+	$emissiveBlendTexture     "vgui/white"
+	$emissiveBlendBaseTexture	 "models/mass_effect_3/weapons/assault_rifles/valkyrie/WPN_ASLl_Emiss"
+	$emissiveBlendFlowTexture     "vgui/white"
+	$emissiveBlendTint "[1 6 15]"
+	$emissiveBlendStrength 10
+	$emissiveBlendScrollVector "[0 0]"
+}

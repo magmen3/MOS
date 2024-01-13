@@ -1,0 +1,11 @@
+"VertexLitGeneric"
+{
+    "$basetexture" "models/ps2models/ps2_nso_armor_shared"
+	"$bumpmap" "models/ps2models/ps2_nso_armor_shared_n"
+	"$phong" 1
+	"$phongexponent" 1
+	"$phongexponenttexture" "models/ps2models/ps2_nso_armor_shared_s"
+	"$phongboost"	"1.0"
+	"$phongfresnelranges"	"[0 0.5 1]"
+	"$nocull" "1"
+}
