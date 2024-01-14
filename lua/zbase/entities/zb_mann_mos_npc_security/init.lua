@@ -82,8 +82,8 @@ NPC.ItemDrops = {
 NPC.ItemDrops_TotalMax = 1
 ---------------------------------------
 -- Health regen
-NPC.HealthRegenAmount = 0
-NPC.HealthCooldown = 0.2
+NPC.HealthRegenAmount = 3
+NPC.HealthCooldown = 3
 ---------------------------------------
 NPC.CanOpenDoors = true -- Can open regular doors
 NPC.CanOpenAutoDoors = true -- Can open auto doors

@@ -4,7 +4,7 @@
 --------------------------------
 hook.Add(
 	"InitPostEntity",
-	"loh",
+	"MOS_InitPostEntity_SPWarning",
 	function()
 		if game.SinglePlayer() then
 			if CLIENT then
@@ -35,15 +35,6 @@ local SwayMode = CreateConVar("MOS_SwayMode", 1, FCVAR_ARCHIVE, "MOS Weapons swa
 CreateConVar("MOS_DamageMul", 1, FCVAR_ARCHIVE, "MOS Weapons damage multiplier", .01, 1000)
 if SERVER then
 	MOS.Print("M.A.N.N. Offense Solutions Initialized!")
-	concommand.Add(
-		"MOS_Drop_TrojanPetka",
-		function(ply, cmd, args)
-			if not IsValid(ply) or not ply:Alive() then return end
-			local Wep = ply:GetActiveWeapon()
-			if not IsValid(Wep) then return end
-			ply:DropWeapon(Wep)
-		end, nil, "Drops your weapon."
-	)
 else
 	system.FlashWindow()
 	-- Fonts --
@@ -225,7 +216,7 @@ if CLIENT then
 	local WDir = VectorRand()
 	hook.Add(
 		"CreateMove",
-		"MOS_CreateMove",
+		"MOS_CreateMove_Sway",
 		function(cmd)
 			local Ply = LocalPlayer()
 			if not Ply:Alive() or SwayMode:GetInt() == 0 then return end

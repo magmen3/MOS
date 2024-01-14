@@ -100,7 +100,7 @@ function ENT:Think()
 		end
 	end
 
-	if timer.TimeLeft("imms_torgash_idlesounddelay" .. self:EntIndex()) == nil and self.SoundCD < CurTime() then
+	if timer.TimeLeft("mos_npc_idlesounddelay" .. self:EntIndex()) == nil and self.SoundCD < CurTime() then
 		self.SoundCD = CurTime() + 1
 		if self.Panic then
 			self:EmitSound(table.Random(panicvoice), 100, math.random(95, 105))
@@ -108,7 +108,7 @@ function ENT:Think()
 			self:EmitSound("ambient/voices/cough" .. math.random(1, 4) .. ".wav", 75, math.random(95, 105))
 		end
 
-		timer.Create("imms_torgash_idlesounddelay" .. self:EntIndex(), math.random(15, 30), 1, function() end)
+		timer.Create("mos_npc_idlesounddelay" .. self:EntIndex(), math.random(15, 30), 1, function() end)
 	end
 end
 

@@ -12,20 +12,39 @@ ENT.RenderGroup = RENDERGROUP_TRANSLUCENT
 ENT.Model = "models/mos/props/lt_c/holograms/console_hr.mdl"
 ENT.Mass = 1500
 ENT.JModPreferredCarryAngles = Angle(0, 180, 0)
-ENT.EZconsumes = {JMod.EZ_RESOURCE_TYPES.BASICPARTS, JMod.EZ_RESOURCE_TYPES.WATER, JMod.EZ_RESOURCE_TYPES.GAS, JMod.EZ_RESOURCE_TYPES.CHEMICALS, JMod.EZ_RESOURCE_TYPES.POWER}
+-- format: multiline
+ENT.EZconsumes = {
+	JMod.EZ_RESOURCE_TYPES.BASICPARTS,
+	JMod.EZ_RESOURCE_TYPES.WATER,
+	JMod.EZ_RESOURCE_TYPES.GAS,
+	JMod.EZ_RESOURCE_TYPES.CHEMICALS,
+	JMod.EZ_RESOURCE_TYPES.POWER,
+	JMod.EZ_RESOURCE_TYPES.WOOD,
+	JMod.EZ_RESOURCE_TYPES.COAL,
+	JMod.EZ_RESOURCE_TYPES.IRONORE,
+	JMod.EZ_RESOURCE_TYPES.LEADORE,
+	JMod.EZ_RESOURCE_TYPES.ALUMINUMORE,
+	JMod.EZ_RESOURCE_TYPES.COPPERORE,
+	JMod.EZ_RESOURCE_TYPES.TUNGSTENORE,
+	JMod.EZ_RESOURCE_TYPES.TITANIUMORE,
+	JMod.EZ_RESOURCE_TYPES.SILVERORE,
+	JMod.EZ_RESOURCE_TYPES.GOLDORE,
+	JMod.EZ_RESOURCE_TYPES.URANIUMORE,
+	JMod.EZ_RESOURCE_TYPES.PLATINUMORE,
+	JMod.EZ_RESOURCE_TYPES.SAND
+}
+
 ENT.Base = "ent_jack_gmod_ezmachine_base"
 ENT.StaticPerfSpecs = {
-	MaxDurability = 150,
-	Armor = .8,
+	MaxDurability = 250,
+	Armor = .9,
 	MaxElectricity = 300,
-	MaxGas = 300,
 	MaxChemicals = 100,
 	MaxWater = 100
 }
 
 local STATE_FINE = 0
 function ENT:CustomSetupDataTables()
-	self:NetworkVar("Float", 1, "Gas")
 	self:NetworkVar("Float", 2, "Water")
 	self:NetworkVar("Float", 3, "Chemicals")
 end
@@ -44,11 +63,9 @@ if SERVER then
 
 		self:UpdateConfig()
 		if self.SpawnFull then
-			self:SetGas(self.MaxGas)
 			self:SetChemicals(self.MaxChemicals)
 			self:SetWater(self.MaxWater)
 		else
-			self:SetGas(0)
 			self:SetChemicals(0)
 			self:SetWater(0)
 		end
@@ -56,10 +73,29 @@ if SERVER then
 		JMod.SetEZowner(self, self.EZowner)
 	end
 
+	function ENT:SetupWire()
+		if not istable(WireLib) then return end
+		local WireOutputs = {"State [NORMAL]"}
+		local WireOutputDesc = {"The state of the machine \n-1 is broken \n0 is fine"}
+		for _, typ in ipairs(self.EZconsumes) do
+			if typ == JMod.EZ_RESOURCE_TYPES.BASICPARTS then
+				typ = "Durability"
+			end
+
+			local ResourceName = string.Replace(typ, " ", "")
+			local ResourceDesc = "Amount of " .. ResourceName .. " left"
+			local OutResourceName = string.gsub(ResourceName, "^%l", string.upper) .. " [NORMAL]"
+			table.insert(WireOutputs, OutResourceName)
+			table.insert(WireOutputDesc, ResourceDesc)
+		end
+
+		self.Outputs = WireLib.CreateOutputs(self, WireOutputs, WireOutputDesc)
+	end
+
 	function ENT:UpdateConfig()
 		self.Craftables = {}
 		for name, info in pairs(JMod.Config.Craftables) do
-			if (istable(info.craftingType) and table.HasValue(info.craftingType, "fabricator")) or (info.craftingType == "fabricator") then
+			if (istable(info.craftingType) and table.HasValue(info.craftingType, "workbench")) or (info.craftingType == "workbench") then
 				-- we store this here for client transmission later
 				-- because we can't rely on the client having the config
 				local infoCopy = table.FullCopy(info)
@@ -71,7 +107,7 @@ if SERVER then
 
 	function ENT:Use(activator)
 		if self:GetState() == STATE_FINE then
-			if (self:GetElectricity() >= 10) and (self:GetGas() >= 8) and (self:GetWater() >= 4) and (self:GetChemicals() >= 4) then
+			if (self:GetElectricity() >= 10) and (self:GetWater() >= 4) and (self:GetChemicals() >= 4) then
 				net.Start("JMod_EZworkbench")
 				net.WriteEntity(self)
 				net.WriteTable(self.Craftables)
@@ -87,7 +123,7 @@ if SERVER then
 
 	function ENT:TryBuild(itemName, ply)
 		local ItemInfo = self.Craftables[itemName]
-		if not (self:GetElectricity() >= 10) or not (self:GetGas() >= 8) or not (self:GetWater() >= 4) or not (self:GetChemicals() >= 4) then
+		if not (self:GetElectricity() >= 10) or not (self:GetWater() >= 4) or not (self:GetChemicals() >= 4) then
 			JMod.Hint(ply, "refill")
 
 			return
@@ -118,9 +154,9 @@ if SERVER then
 											JMod.BuildRecipe(ItemInfo.results, ply, Pos, Ang, ItemInfo.skin)
 											JMod.BuildEffect(Pos)
 											self:SetElectricity(math.Clamp(self:GetElectricity() - 15, 0.0, self.MaxElectricity))
-											self:SetGas(math.Clamp(self:GetGas() - 10, 0.0, self.MaxGas))
 											self:SetWater(math.Clamp(self:GetWater() - 5, 0.0, self.MaxWater))
 											self:SetChemicals(math.Clamp(self:GetChemicals() - 5, 0.0, self.MaxChemicals))
+											self:UpdateWireOutputs()
 										end
 									end
 								end
@@ -175,32 +211,34 @@ elseif CLIENT then
 		self:DrawModel()
 		if DetailDraw then
 			if self:GetElectricity() > 0 then
-				local Opacity = math.random(50, 200)
-				local ElecFrac, GasFrac, ChemFrac, WaterFrac = self:GetElectricity() / self.MaxElectricity, self:GetGas() / self.MaxGas, self:GetChemicals() / self.MaxChemicals, self:GetWater() / self.MaxWater
+				local Opacity = math.random(150, 250)
+				local ElecFrac, ChemFrac, WaterFrac = self:GetElectricity() / self.MaxElectricity, self:GetChemicals() / self.MaxChemicals, self:GetWater() / self.MaxWater
 				local DisplayAng = SelfAng:GetCopy()
+				----------------------------------------
 				DisplayAng:RotateAroundAxis(Forward, 90)
 				DisplayAng:RotateAroundAxis(Up, 90)
-				cam.Start3D2D(BasePos + Up * 16 - Right * 3 - Forward * 0, DisplayAng, .1)
-				draw.SimpleTextOutlined("POWER " .. math.Round(ElecFrac * 100) .. "%", "JMod-Display", 0, 60, JMod.GoodBadColor(ElecFrac, true, Opacity), TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, 3, Color(0, 0, 0, Opacity))
-				draw.SimpleTextOutlined("GAS " .. math.Round(GasFrac * 100) .. "%", "JMod-Display", 0, 100, JMod.GoodBadColor(GasFrac, true, Opacity), TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, 3, Color(0, 0, 0, Opacity))
+				cam.Start3D2D(BasePos + Up * 19 - Right * 4.2 - Forward * 0, DisplayAng, .1)
+				draw.SimpleTextOutlined("POWER " .. math.Round(ElecFrac * 100) .. "%", "JMod-Display", 0, 100, JMod.GoodBadColor(ElecFrac, true, Opacity), TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, 3, Color(0, 0, 0, Opacity))
 				draw.SimpleTextOutlined("CHEMICALS " .. math.Round(ChemFrac * 100) .. "%", "JMod-Display", 0, 140, JMod.GoodBadColor(ChemFrac, true, Opacity), TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, 3, Color(0, 0, 0, Opacity))
 				draw.SimpleTextOutlined("WATER " .. math.Round(WaterFrac * 100) .. "%", "JMod-Display", 0, 180, JMod.GoodBadColor(WaterFrac, true, Opacity), TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, 3, Color(0, 0, 0, Opacity))
 				cam.End3D2D()
-				local DisplayAng = SelfAng:GetCopy()
-				DisplayAng:RotateAroundAxis(Forward, 90)
-				DisplayAng:RotateAroundAxis(Up, 90)
-				cam.Start3D2D(BasePos - Up * 9 - Right * 15 - Forward * 0, DisplayAng, .07)
-				draw.SimpleTextOutlined("POWER " .. math.Round(ElecFrac * 100) .. "%", "JMod-Display", -550, 10, JMod.GoodBadColor(ElecFrac, true, Opacity), TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, 3, Color(0, 0, 0, Opacity))
-				draw.SimpleTextOutlined("GAS " .. math.Round(GasFrac * 100) .. "%", "JMod-Display", -335, 10, JMod.GoodBadColor(GasFrac, true, Opacity), TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, 3, Color(0, 0, 0, Opacity))
+				----------------------------------------
+				local DisplayAng2 = SelfAng:GetCopy()
+				DisplayAng2:RotateAroundAxis(Forward, 90)
+				DisplayAng2:RotateAroundAxis(Up, 90)
+				cam.Start3D2D(BasePos - Up * 9 - Right * 10 - Forward * 0, DisplayAng2, .07)
+				draw.SimpleTextOutlined("POWER " .. math.Round(ElecFrac * 100) .. "%", "JMod-Display", -355, 10, JMod.GoodBadColor(ElecFrac, true, Opacity), TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, 3, Color(0, 0, 0, Opacity))
 				draw.SimpleTextOutlined("CHEMICALS " .. math.Round(ChemFrac * 100) .. "%", "JMod-Display", -80, 10, JMod.GoodBadColor(ChemFrac, true, Opacity), TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, 3, Color(0, 0, 0, Opacity))
 				draw.SimpleTextOutlined("WATER " .. math.Round(WaterFrac * 100) .. "%", "JMod-Display", 190, 10, JMod.GoodBadColor(WaterFrac, true, Opacity), TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, 3, Color(0, 0, 0, Opacity))
 				cam.End3D2D()
-				local DisplayAng = SelfAng:GetCopy()
-				DisplayAng:RotateAroundAxis(Forward, 90)
-				DisplayAng:RotateAroundAxis(Up, 90)
-				cam.Start3D2D(BasePos + Up * 26 - Right * 41 - Forward * 0, DisplayAng, .12)
+				----------------------------------------
+				local DisplayAng3 = SelfAng:GetCopy()
+				DisplayAng3:RotateAroundAxis(Forward, 90)
+				DisplayAng3:RotateAroundAxis(Up, 90)
+				cam.Start3D2D(BasePos + Up * 26 - Right * 41 - Forward * 0, DisplayAng3, .12)
 				draw.SimpleTextOutlined(self.PrintName, "JMod-Display", -550, 10, JMod.GoodBadColor(ElecFrac, true, Opacity), TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, 3, Color(0, 0, 0, Opacity))
 				cam.End3D2D()
+				----------------------------------------
 				self:SetBodygroup(1, 0)
 				self:SetBodygroup(2, 0)
 				self:SetBodygroup(3, 0)

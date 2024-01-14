@@ -19,7 +19,7 @@ NPC.PainSounds = "ZBaseMOSZombie.Pain" -- Sounds emitted on hurt
 NPC.OnMeleeSounds = "ZBaseMOSZombie.Attack" -- Sounds emitted when the NPC does its melee attack
 NPC.MuteDefaultVoice = true -- Mute all default voice sounds emitted by this NPC
 ---------------------------------------
-NPC.MoveSpeedMultiplier = 2
+NPC.MoveSpeedMultiplier = 2.3
 NPC.CanPatrol = true -- Use base patrol behaviour
 NPC.CanJump = true -- Can the NPC jump?
 ---------------------------------------
@@ -35,12 +35,13 @@ NPC.MeleeWeaponAnimations = {"fastattack"} -- Animations to use when attacking w
 NPC.MeleeAttackAnimations = {"fastattack"}
 ---------------------------------------
 -- Health regen
-NPC.HealthRegenAmount = 0
-NPC.HealthCooldown = 0.2
+NPC.HealthRegenAmount = 5
+NPC.HealthCooldown = 3
 ---------------------------------------
 NPC.CanOpenDoors = true -- Can open regular doors
 NPC.CanOpenAutoDoors = true -- Can open auto doors
 NPC.CanUse = true -- Can push buttons, pull levers, etc
+NPC.CantReachEnemyBehaviour = ZBASE_CANTREACHENEMY_HIDE -- How should it behave when it cannot reach the enemy while chasing
 ---------------------------------------
 NPC.BloodColor = BLOOD_COLOR_ZOMBIE -- DONT_BLEED || BLOOD_COLOR_RED || BLOOD_COLOR_YELLOW || BLOOD_COLOR_GREEN
 ---------------------------------------
