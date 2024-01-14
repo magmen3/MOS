@@ -1,0 +1,20 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		},
+		{
+			"path": "C:/Users/magmen/Downloads/jmod/lua"
+		},
+		{
+			"path": "C:/Users/magmen/Downloads/zbase2-main"
+		}
+	],
+	"settings": {},
+	"extensions": {
+		"recommendations": [
+			"venner.vscode-glua-enhanced",
+			"goz3rr.vscode-glualint"
+		]
+	}
+}

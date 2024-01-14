@@ -1,0 +1,30 @@
+"UnLitGeneric"
+{
+	$basetexture "models\lt_c\sci_fi\airlock_hologram"
+	$nocull 1
+	$translucent 1
+	$color2 "[0.941 0.811 0.082]"
+
+	$detail "Models\LT_C\Hologram\scanlines"
+	$detailscale 10
+	$detailblendfactor 1
+	$detailblendmode 1
+
+	Proxies
+	{
+		UniformNoise
+		{
+			resultVar	$alpha
+			minVal	0.9
+			maxVal	1
+		}
+		"TextureScroll"
+		{
+			"texturescrollvar" "$detailtexturetransform"
+			"texturescrollrate" 5
+			"texturescrollangle" 0
+		}
+ 	}
+}
+
+

@@ -1,0 +1,22 @@
+"VertexLitGeneric"
+{
+	$basetexture "models\lt_c\sci_fi\computers\crystal_platters"
+	$bumpmap "models/lt_c/sci_fi/computers\crystal_platters_n"
+	"$halflambert" 1
+	$additive 1
+	$color2 "[1.0 0.90 0.415]" //amber
+	
+	$ambientocclusion           "0"
+
+	"$phong" "1"
+	"$phongexponent" "150"
+	"$phongboost" "0.5"	
+	"$phongfresnelranges"	"[ 1 6 15 ]"
+	$phongtint "[1.0 0.90 0.415]"  //amber
+
+	"$envmap" "env_cubemap"
+	"$envmapcontrast" "1"
+	"$envmaptint" "[.5 0.4 0.2]"  //amber
+}
+
+

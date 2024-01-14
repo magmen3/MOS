@@ -1,0 +1,23 @@
+VertexLitGeneric
+{
+	"$basetexture"	"Models\LT_C\sci_fi\pipe_large"
+	"$bumpmap"	"Models\LT_C\sci_fi\pipe_large_n"
+	"$halflambert" "1"	
+
+	"$normalmapalphaenvmapmask" 1
+	"$envmap" "env_cubemap"
+	"$envmaptint" "[ .5 .5 .5 ]"
+
+	"$phong" "1"
+	"$phongexponenttexture" "Models\LT_C\sci_fi\exp_30_albdeto"
+	"$phongexponent" 15
+	"$phongboost" "1"
+	"$phongfresnelranges"	"[ .3 1.2 8]"
+//	"$PhongAlbedoTint" "1"
+
+	$detail "models\lt_c\sci_fi\detail1"
+	$detailscale 10
+	$detailblendfactor 0.5
+	$detailblendmode 0
+
+}

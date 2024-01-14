@@ -1,0 +1,27 @@
+CustomHero
+{
+	"$basetexture" "models\PolingosStuff\Halo\Covenant\Halo2A\Weapons\PlasmaGrenade\plasma_grenade_hr_01_s"
+	"$normalmap" "models\PolingosStuff\Halo\Covenant\Halo2A\Weapons\PlasmaGrenade\plasma_grenade_hr_01_n"
+
+	"$maskmap2" 	"models\PolingosStuff\Halo\Covenant\Halo2A\Weapons\PlasmaGrenade\plasma_grenade_hr_01_ch"
+
+	"$nocull" "0"
+	"$additive" "1"
+
+	"$specularexponent"		"20"
+	"$specularscale"		 	"0"
+	"$specularcolor" 			"[1 1 1]"
+	"$rimlightcolor" 			"[1 1 1]"
+
+	"$rimlightscale" 			"0"
+	"$ambientscale"			"0"
+
+	"$envmap" "models\cubemaps\fallout4cube_dithered_grey"
+	"$maskenvbymetalness" "0"
+
+	"$metalnessblendtofull"	"1"
+
+	"$envmapintensity"		"0.225"
+// If you're gonna fiddle with this change it to 1 � (number of sfm lights + 1)
+// You'll find the intensity gets multiplied for every light touching the model
+}

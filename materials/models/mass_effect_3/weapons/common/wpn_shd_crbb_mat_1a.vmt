@@ -2,19 +2,27 @@
 {
 	"$basetexture" "models/mass_effect_3/weapons/common/WPN_SHD_CRBb_DIFF_1k"
 	"$bumpmap" "models/mass_effect_3/weapons/common/WPN_SHD_CRBb_Norm_1k"
-//	$lightwarptexture		 "models/mass_effect_3/weapons/shared/lightwrap_metallic"
 	"$color2"		"[.9 .9 .9]"
 	$model				 1
 	$phong				1
 	$phongexponenttexture	"models/mass_effect_3/weapons/shared/albedo_tintdefine"
 	$phongdisablehalflambert 	1
-	$phongboost		12
+	$phongboost		5
 	$phongexponent		60
 	$phongalbedotint 	1
-//	$phongtint			"[.85 .85 1]"
 	$phongfresnelranges	"[.3 4 8]"
 	$phongwarptexture "models/mass_effect_3/weapons/shared/phongwarp_metal2" 
 	$rimlight 1
 	$rimlighexponent 25
 	$rimlightboost 0.5
+	"$ambientocclusion" "1"
+
+	"$detail" "detail/metal_detail_01"
+	"$detailscale" "4"
+	"$detailblendfactor" "0.9"
+	"$detailblendmode" "0"
+
+	"$rimlight" "1"
+	"$rimlightexponent" "34"
+	"$rimlightboost" "0.2"
 }

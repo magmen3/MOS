@@ -24,14 +24,14 @@ if SERVER then
 	end
 
 	function ENT:Initialize()
-		self:SetModel("models/haxxer/me2_props/medcrate.mdl")
+		self:SetModel("models/mos/props/haxxer/me2_props/medcrate.mdl")
 		self:PhysicsInit(SOLID_VPHYSICS)
 		self:SetMoveType(MOVETYPE_VPHYSICS)
 		self:SetSolid(SOLID_VPHYSICS)
 		self:DrawShadow(true)
 		self:SetUseType(SIMPLE_USE)
 		local Phys = self:GetPhysicsObject()
-		if Phys:IsValid() then
+		if IsValid(Phys) then
 			Phys:SetMass(20)
 			Phys:Wake()
 		end
@@ -63,13 +63,13 @@ if SERVER then
 			activator.EZhealth = activator.EZhealth or 0
 			local Missing = Max - (Helf + activator.EZhealth)
 			if Missing > 0 then
-				local AddAmt = math.min(Missing, 5 * JMod.Config.Tools.Medkit.HealMult)
+				local AddAmt = math.min(Missing, 15 * JMod.Config.Tools.Medkit.HealMult)
 				for i = 1, 3 do
 					activator:EmitSound("snds_jack_gmod/ez_medical/" .. math.random(1, 12) .. ".wav", 60, math.random(90, 110))
 				end
 
-				if activator.EZnutrition.Nutrients < 30 then
-					JMod.ConsumeNutrients(activator, math.random(2, 4)) -- analog of "food boost" from homicide
+				if activator.EZnutrition.Nutrients < 20 then
+					JMod.ConsumeNutrients(activator, math.random(6, 8)) -- analog of "food boost" from homicide
 				end
 
 				activator.EZhealth = activator.EZhealth + AddAmt
@@ -82,9 +82,9 @@ if SERVER then
 				end
 
 				activator:PrintMessage(HUD_PRINTCENTER, "stopping bleeding")
-				activator.EZbleeding = math.Clamp(activator.EZbleeding - JMod.Config.Tools.Medkit.HealMult * 50, 0, 9e9)
-				if activator.EZnutrition.Nutrients < 30 then
-					JMod.ConsumeNutrients(activator, math.random(1, 2))
+				activator.EZbleeding = math.Clamp(activator.EZbleeding - JMod.Config.Tools.Medkit.HealMult * 80, 0, 9e9)
+				if activator.EZnutrition.Nutrients < 20 then
+					JMod.ConsumeNutrients(activator, math.random(4, 6))
 				end
 
 				activator:ViewPunch(Angle(math.Rand(-2, 2), math.Rand(-2, 2), math.Rand(-2, 2)))

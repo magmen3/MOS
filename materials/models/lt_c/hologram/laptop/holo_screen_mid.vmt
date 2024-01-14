@@ -1,0 +1,21 @@
+"UnLitGeneric"
+{
+	$basetexture "Models\LT_C\Hologram\laptop\hologram_mid_login"
+	// $additive 1
+	$nocull 1
+	$translucent 1
+	$model 1
+ 
+	Proxies
+	{
+		Sine
+		{
+			resultVar	$alpha
+			timeoffset	0
+			sineperiod	4
+			sinemin		0
+			sinemax		1
+		}
+	}
+}
+

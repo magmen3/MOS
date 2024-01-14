@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/lt_c/sci_fi/light_shadow"
+	"$halflambert" "1"
+	"$translucent" 1
+}

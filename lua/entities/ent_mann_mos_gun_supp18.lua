@@ -19,6 +19,7 @@ ENT.Attachment = "muzzle"
 ENT.Light = false
 ENT.MannCorp = false -- false disables authorization and sets holo color to red
 ENT.AllowMuzzleFlash = false
+ENT.JModEZstorable = true -- Set true for handguns that should be storable
 -- Gun settings
 ENT.Spread = .05
 ENT.Damage = 23

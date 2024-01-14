@@ -1,0 +1,31 @@
+"UnLitGeneric"
+{
+	$basetexture "Models\LT_C\Hologram\keypad/large_elements"
+	// $additive 1
+	$nocull 1
+	$translucent 1
+	$model 1
+
+	$detail "Models\LT_C\Hologram\scanlines"
+	$detailscale 1
+	$detailblendfactor 1
+	$detailblendmode 1
+
+	Proxies
+	{
+		UniformNoise
+		{
+			resultVar	$alpha
+			minVal	0.7
+			maxVal	1
+		}
+		"TextureScroll"
+		{
+			"texturescrollvar" "$detailtexturetransform"
+			"texturescrollrate" 5
+			"texturescrollangle" 0
+		}
+ 	}
+}
+
+

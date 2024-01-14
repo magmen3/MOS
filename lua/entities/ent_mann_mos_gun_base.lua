@@ -74,13 +74,13 @@ if SERVER then
 		self:SetMoveType(MOVETYPE_VPHYSICS)
 		self:SetSolid(SOLID_VPHYSICS)
 		self:SetUseType(SIMPLE_USE)
-		self:SetCollisionGroup(COLLISION_GROUP_WEAPON)
+		-- self:SetCollisionGroup(COLLISION_GROUP_WEAPON)
 		self:SetColor(self.Color or color_white)
 		self.SNDPitch = self.MannCorp and self.SNDPitch or self.SNDPitch - 15
 		RPM = CurTime() + 1.5
 		NextUse = CurTime() + .5
 		local PhysObj = self:GetPhysicsObject()
-		if PhysObj:IsValid() then
+		if IsValid(PhysObj) then
 			PhysObj:SetMass(self.Mass or 45)
 			PhysObj:Wake()
 		end
@@ -188,7 +188,7 @@ if SERVER then
 	function ENT:Reload()
 		if not self.AllowReload then return end
 		local Owner = JMod.GetEZowner(self)
-		local IsGrabbing = self:IsPlayerHolding() or (Owner:GetActiveWeapon():IsValid() and Owner:GetActiveWeapon():GetClass() == "wep_jack_gmod_hands" and Owner:GetActiveWeapon().CarryEnt == self)
+		local IsGrabbing = self:IsPlayerHolding() or (IsValid(Owner:GetActiveWeapon()) and Owner:GetActiveWeapon():GetClass() == "wep_jack_gmod_hands" and Owner:GetActiveWeapon().CarryEnt == self)
 		if not IsGrabbing then return end
 		self.Reloading = true
 		if self.RecoilHeat >= 0 then
@@ -199,7 +199,7 @@ if SERVER then
 		timer.Simple(
 			self.ReloadTime or 2,
 			function()
-				if not self:IsValid() or not IsGrabbing then return end
+				if not (IsValid(self) or IsGrabbing) then return end
 				self.ClipSize = self.MaxClip
 				self:SetNWInt("MOS-ClipSize", self.ClipSize)
 				self.Reloading = false
@@ -243,7 +243,7 @@ if SERVER then
 			timer.Simple(
 				.1,
 				function()
-					if not self:IsValid() then return end
+					if not IsValid(self) then return end
 					DropEntityIfHeld(self)
 					NextUse = CurTime() + 2
 					self:EmitSound(Sound("snd_jack_denied.wav"), 75, 85, 1, CHAN_VOICE)
@@ -273,13 +273,8 @@ if SERVER then
 		return false
 	end
 
-	local function PoshliVseNaher(ent, ply)
-		if not (ent or ply or ent.SWEP) then
-			MOS.Print("Poshel ti naher kozel")
-
-			return
-		end
-
+	local function GiveSWEP(ent, ply)
+		if not (ent or ply) then return end
 		local Alt = ply:KeyDown(JMod.Config.General.AltFunctionKey)
 		local SWEP = ent.SWEP
 		if not SWEP then return end
@@ -320,7 +315,7 @@ if SERVER then
 		end]]
 		RPM = CurTime() + .6
 		if IsValid(Owner) then
-			oldholdtype = Owner:GetActiveWeapon():IsValid() and Owner:GetActiveWeapon():GetHoldType()
+			oldholdtype = IsValid(Owner:GetActiveWeapon()) and Owner:GetActiveWeapon():GetHoldType()
 		end
 
 		if self.MannCorp then
@@ -333,7 +328,7 @@ if SERVER then
 					self.IsFirstTimeUsed = false
 				end
 
-				PoshliVseNaher(self, ply)
+				GiveSWEP(self, ply)
 			end
 		elseif not self.MannCorp then
 			if self.IsFirstTimeUsed then
@@ -344,7 +339,7 @@ if SERVER then
 				self.IsFirstTimeUsed = false
 			end
 
-			PoshliVseNaher(self, ply)
+			GiveSWEP(self, ply)
 		end
 	end
 
@@ -357,10 +352,10 @@ if SERVER then
 		local Owner = JMod.GetEZowner(self)
 		if not IsValid(Owner) or not Owner:IsPlayer() or Owner == nil then return end
 		local Time = CurTime()
-		local IsGrabbing = self:IsPlayerHolding() or (Owner:GetActiveWeapon():IsValid() and Owner:GetActiveWeapon():GetClass() == "wep_jack_gmod_hands" and Owner:GetActiveWeapon().CarryEnt == self)
+		local IsGrabbing = self:IsPlayerHolding() or (IsValid(Owner:GetActiveWeapon()) and Owner:GetActiveWeapon():GetClass() == "wep_jack_gmod_hands" and Owner:GetActiveWeapon().CarryEnt == self)
 		self:SetNWBool("MOS-IsHolding", IsGrabbing)
 		if not IsGrabbing then
-			oldholdtype = Owner:GetActiveWeapon():IsValid() and Owner:GetActiveWeapon():GetHoldType()
+			oldholdtype = IsValid(Owner:GetActiveWeapon()) and Owner:GetActiveWeapon():GetHoldType()
 		end
 
 		if not self:IsInWorld() then

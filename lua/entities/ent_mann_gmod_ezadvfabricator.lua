@@ -9,7 +9,7 @@ ENT.Author = "Mannytko"
 ENT.Category = "M.A.N.N. Offense Solutions - Misc"
 ENT.Spawnable = true
 ENT.RenderGroup = RENDERGROUP_TRANSLUCENT
-ENT.Model = "models/lt_c/holograms/console_hr.mdl"
+ENT.Model = "models/mos/props/lt_c/holograms/console_hr.mdl"
 ENT.Mass = 1500
 ENT.JModPreferredCarryAngles = Angle(0, 180, 0)
 ENT.EZconsumes = {JMod.EZ_RESOURCE_TYPES.BASICPARTS, JMod.EZ_RESOURCE_TYPES.WATER, JMod.EZ_RESOURCE_TYPES.GAS, JMod.EZ_RESOURCE_TYPES.CHEMICALS, JMod.EZ_RESOURCE_TYPES.POWER}
@@ -33,7 +33,7 @@ end
 if SERVER then
 	function ENT:CustomInit()
 		local phys = self:GetPhysicsObject()
-		if phys:IsValid() then
+		if IsValid(phys) then
 			phys:SetBuoyancyRatio(.1)
 			phys:SetMaterial("Combine_metal")
 		end
@@ -135,7 +135,7 @@ if SERVER then
 	end
 elseif CLIENT then
 	function ENT:CustomInit()
-		self.ZipZoop = JMod.MakeModel(self, "models/lt_c/sci_fi/ground_locker_small.mdl", "", .8)
+		self.ZipZoop = JMod.MakeModel(self, "models/mos/props/lt_c/sci_fi/ground_locker_small.mdl", "", .8)
 		if not self.EZowner then
 			self.ZipZoop:SetColor(Color(45, 101, 153))
 		else

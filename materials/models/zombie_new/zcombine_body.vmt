@@ -1,0 +1,24 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/zombie_new/zcombine_body"
+	"$bumpmap"	"models/zombie_new/zcombine_body_n"
+	"$halflambert" "1"
+	"$nodecal" "1"
+	"$model" "1"
+	"$phong" "1"
+	"$phongboost" "0.2"
+	"$phongexponent" "18"
+	"$phongtint" "[1 .85 .85]"
+	"$phongfresnelranges" "[.5 .85 30]"
+	"$phongalbedotint" "1"
+	"$ambientocclusion" "1"
+
+	"$detail" "detail/metal_detail_01"
+	"$detailscale" "4"
+	"$detailblendfactor" "0.9"
+	"$detailblendmode" "0"
+
+	"$rimlight" "1"
+	"$rimlightexponent" "34"
+	"$rimlightboost" "0.2"
+}

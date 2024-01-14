@@ -1,0 +1,9 @@
+"UnLitGeneric"
+{
+	$basetexture "Models\LT_C\Hologram\laptop\hologram_mid_hist"
+	// $additive 1
+	$nocull 1
+	$translucent 1
+	$model 1
+}
+

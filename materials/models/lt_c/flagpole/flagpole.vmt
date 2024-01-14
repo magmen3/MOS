@@ -1,0 +1,22 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/lt_c/flagpole/flagpole"
+	"$bumpmap" 	"models/lt_c/flagpole/flagpole_n"
+	"$halflambert" "1"
+	$nocull 1
+
+	"$basetexturealphaenvmapmask" 1
+	"$envmap" "env_cubemap"
+	"$envmaptint" "[ 1 1 1 ]"
+	"$envmapsaturation" ".01"
+	"$envmapcontrast" "0.1"
+//	"$envmapFresnel" "1"
+
+	"$phong" "1"
+	"$phongexponenttexture" "models/lt_c/flagpole/flagpole_exp"
+	"$phongboost" "2"
+	"$phongfresnelranges"	"[ .3 1.2 8]"
+	"$phongAlbedoTint" "1"
+
+
+}

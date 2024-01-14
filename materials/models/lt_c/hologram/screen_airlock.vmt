@@ -1,0 +1,27 @@
+"UnLitGeneric"
+{
+	$basetexture "Models\LT_C\Hologram\screen_airlock"
+//	$additive 1
+	$translucent 1
+	$model 1	
+
+	$offset 0 // declare custom var
+ 
+	Proxies
+	{
+		EntityRandom
+		{
+			resultVar $offset // write to custom var
+		}
+		Sine
+		{
+			resultVar	$alpha
+			timeoffset	$offset // read from custom var
+			sineperiod	8
+			sinemin		0
+			sinemax		1
+		}
+	}
+}
+
+

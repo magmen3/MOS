@@ -8,7 +8,7 @@ ENT.Author = "Mannytko"
 ENT.Category = "M.A.N.N. Offense Solutions - Misc"
 ENT.PrintName = "EZ Plasma Grenade"
 ENT.Spawnable = true
-ENT.Model = "models/halo/covenant/halo2a/weapons/plasmagrenade/plasmagrenade.mdl"
+ENT.Model = "models/mos/weapons/halo/covenant/halo2a/weapons/plasmagrenade/plasmagrenade.mdl"
 local BaseClass = baseclass.Get(ENT.Base)
 if SERVER then
 	function ENT:Prime()

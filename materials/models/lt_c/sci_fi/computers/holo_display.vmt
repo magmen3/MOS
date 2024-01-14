@@ -1,0 +1,39 @@
+"UnLitGeneric"
+{
+	$basetexture "models\lt_c\sci_fi\weapons\holo_mg"
+	// $additive 1
+	$nocull 1
+	$translucent 1
+	$color2 "[1.0 0.90 0.415]"
+
+
+        "rotation" 0
+ 
+        "Proxies"
+        {
+ 
+                "TextureTransform"
+                {
+                        "rotateVar" "rotation"
+                        "resultVar" "$basetexturetransform"
+                }
+ 
+                "LinearRamp"
+                {
+                        "rate" "30"
+                        "initialvalue" "0"
+                        "resultVar" "rotation"
+                }
+
+	UniformNoise
+	{
+		resultVar	$alpha
+		minVal	0.6
+		maxVal	0.8
+	}
+ 
+        }
+
+}
+
+

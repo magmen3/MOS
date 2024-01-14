@@ -1,0 +1,31 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/lt_c/sci_fi/generator"
+	"$bumpmap" 	"models/lt_c/sci_fi/generator_n"
+	"$halflambert" "1"
+//	"$selfillum" 1
+//	"$selfillummask" "models/lt_c/sci_fi/dm_container_2_illum"
+
+	"$basetexturealphaenvmapmask" 1
+	"$envmap" "env_cubemap"
+	"$envmaptint" "[ .8 .8 .9 ]"
+	"$envmapFresnel" "1"
+
+	"$phong" "1"
+	"$phongexponenttexture" "models/lt_c/sci_fi/generator_exp"
+//	"$phongexponent" 5
+	"$phongboost" "2"
+	"$phongfresnelranges"	"[ .3 1.2 8]"
+	"$PhongAlbedoTint" "1"
+
+//	"$rimlight" "1"						
+//	"$rimlightexponent" "8"				
+//	"$rimlightboost" ".3"
+//	"$rimmask" "1"
+
+//	$detail "models/lt_c/sci_fi/box_crate_illum"
+//	$detailtint "[ .96 .87 .24 ]"
+//	$detailscale 1
+//	$detailblendfactor "1"
+//	$detailblendmode 5
+}

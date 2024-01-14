@@ -37,7 +37,12 @@ JMod.MOSArmorTable["RegularSoldier-Armor"] = {
 	Spawnable = true,
 	AdminOnly = false,
 	--------------------------------
-	mdl = "models/lt_c/sci_fi/box_crate.mdl",
+	mdl = "models/mos/props/lt_c/sci_fi/box_crate.mdl",
+	clr = {
+		r = 220,
+		g = 235,
+		b = 255
+	},
 	slots = {
 		head = 1,
 		eyes = 1,
@@ -71,7 +76,12 @@ JMod.MOSArmorTable["RebelSoldier-Armor"] = {
 	Spawnable = true,
 	AdminOnly = false,
 	--------------------------------
-	mdl = "models/lt_c/sci_fi/box_crate.mdl",
+	mdl = "models/mos/props/lt_c/sci_fi/box_crate.mdl",
+	clr = {
+		r = 255,
+		g = 220,
+		b = 220
+	},
 	clrForced = true,
 	slots = {
 		head = 1,
@@ -106,7 +116,12 @@ JMod.MOSArmorTable["Security-Armor"] = {
 	Spawnable = true,
 	AdminOnly = false,
 	--------------------------------
-	mdl = "models/lt_c/sci_fi/box_crate.mdl",
+	mdl = "models/mos/props/lt_c/sci_fi/box_crate.mdl",
+	clr = {
+		r = 220,
+		g = 220,
+		b = 255
+	},
 	clrForced = true,
 	slots = {
 		head = 1,

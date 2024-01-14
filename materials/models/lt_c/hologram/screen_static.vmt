@@ -1,0 +1,18 @@
+"UnLitGeneric"
+{
+	$basetexture "Models\LT_C\Hologram\screen_static"
+	$additive 1
+	$model 1	
+	
+		"Proxies"
+		{
+			 "AnimatedTexture"
+			{
+			"animatedtexturevar" "$basetexture"
+			"animatedtextureframenumvar" "$frame"
+			 "animatedtextureframerate" 29.995
+			}
+		}
+}
+
+

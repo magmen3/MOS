@@ -1,0 +1,16 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/lt_c/sci_fi/counter"
+	"$bumpmap" 	"models/lt_c/sci_fi/counter_n"
+	"$halflambert" "1"
+
+	"$basetexturealphaenvmapmask" 1
+	"$envmap" "env_cubemap"
+	"$envmaptint" "[ .6 .6 .6 ]" //.35
+//	"$envmapFresnel" "1"
+
+	"$phong" "1"
+	"$phongexponent" 10
+	"$phongboost" "1"
+	"$phongfresnelranges"	"[ .7 1.2 5]"
+}

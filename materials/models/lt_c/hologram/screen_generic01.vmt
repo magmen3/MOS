@@ -1,0 +1,8 @@
+"UnLitGeneric"
+{
+	$basetexture "Models\LT_C\Hologram\screen_generic01"
+	$translucent 1
+	$model 1	
+}
+
+

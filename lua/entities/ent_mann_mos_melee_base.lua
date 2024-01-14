@@ -50,7 +50,7 @@ if SERVER then
 		self:SetUseType(SIMPLE_USE)
 		self:SetCollisionGroup(COLLISION_GROUP_NONE)
 		local PhysObj = self:GetPhysicsObject()
-		if PhysObj:IsValid() then
+		if IsValid(PhysObj) then
 			PhysObj:SetMass(self.Mass or 50)
 			PhysObj:Wake()
 		end
@@ -72,7 +72,7 @@ if SERVER then
 
 		local Owner = JMod.GetEZowner(self)
 		if not IsValid(Owner) or not Owner:IsPlayer() or Owner == nil then return end
-		oldholdtype = Owner:GetActiveWeapon():IsValid() and Owner:GetActiveWeapon():GetHoldType()
+		oldholdtype = IsValid(Owner:GetActiveWeapon()) and Owner:GetActiveWeapon():GetHoldType()
 	end
 
 	function ENT:Think()
@@ -82,9 +82,9 @@ if SERVER then
 
 		local Owner = JMod.GetEZowner(self)
 		if not IsValid(Owner) or not Owner:IsPlayer() or Owner == nil then return end
-		local IsGrabbing = self:IsPlayerHolding() or (Owner:GetActiveWeapon():IsValid() and Owner:GetActiveWeapon():GetClass() == "wep_jack_gmod_hands" and Owner:GetActiveWeapon().CarryEnt == self)
+		local IsGrabbing = self:IsPlayerHolding() or (IsValid(Owner:GetActiveWeapon()) and Owner:GetActiveWeapon():GetClass() == "wep_jack_gmod_hands" and Owner:GetActiveWeapon().CarryEnt == self)
 		if not IsGrabbing then
-			oldholdtype = Owner:GetActiveWeapon():IsValid() and Owner:GetActiveWeapon():GetHoldType()
+			oldholdtype = IsValid(Owner:GetActiveWeapon()) and Owner:GetActiveWeapon():GetHoldType()
 		end
 
 		if IsValid(Owner:GetActiveWeapon()) and IsGrabbing then
@@ -147,7 +147,7 @@ if SERVER then
 		end
 
 		if data.DeltaTime > .3 and data.Speed >= 600 then
-			if data.HitEntity:IsValid() and data.HitEntity ~= Owner then
+			if IsValid(data.HitEntity) and data.HitEntity ~= Owner then
 				self:DamageEnt(data.HitEntity)
 				NextAttack = CurTime() + .8
 			elseif data.HitEntity == game.GetWorld() then

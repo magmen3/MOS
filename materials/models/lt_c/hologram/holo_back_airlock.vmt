@@ -1,0 +1,9 @@
+"UnLitGeneric"
+{
+	$basetexture "Models\LT_C\Hologram\holo_back_airlock"
+	// $additive 1
+	$translucent 1
+	$model 1
+}
+
+

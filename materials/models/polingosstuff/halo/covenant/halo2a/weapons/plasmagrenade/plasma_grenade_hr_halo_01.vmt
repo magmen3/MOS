@@ -1,0 +1,7 @@
+"UnlitGeneric"
+{
+	"$basetexture" "models\PolingosStuff\Halo\Covenant\Halo2A\Weapons\PlasmaGrenade\plasma_grenade_hr_halo_01"
+
+	"$color2"			"[0.75 2.5 0.75]"
+	"$additive"	"1"
+}

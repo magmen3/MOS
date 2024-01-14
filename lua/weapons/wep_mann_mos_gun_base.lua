@@ -104,6 +104,10 @@ function SWEP:Deploy()
 	self.Pwner = self:GetOwner() -- self:GetOwner() returns NULL ENTITY in SWEP:OnDrop()...
 end
 
+--!! TODO
+function SWEP:DrawHUD()
+end
+
 function SWEP:ViewModelDrawn()
 	if not self:GetOwner():IsPlayer() then return end
 	self:SCKViewModelDrawn()
@@ -174,7 +178,7 @@ function SWEP:SetupDataTables()
 end
 
 function SWEP:OnDrop()
-	if CLIENT or not self:IsValid() then return end
+	if CLIENT or not IsValid(self) then return end
 	local Ent = ents.Create(self.ENT)
 	Ent:SetPos(self:GetPos())
 	Ent:SetAngles(self:GetAngles())

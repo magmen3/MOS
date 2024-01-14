@@ -1,0 +1,10 @@
+"UnLitGeneric"
+{
+	$basetexture "Models\LT_C\Hologram\console\planet_hr"
+	// $additive 1
+	$color2 "[0.972 0.823 0.082]"
+	$nocull 1
+	$translucent 1
+	$model 1
+}
+

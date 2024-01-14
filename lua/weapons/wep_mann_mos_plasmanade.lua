@@ -6,8 +6,8 @@ SWEP.PrintName = "Plasma Grenade"
 SWEP.Author = "M.A.N.N. Industries"
 --------------------------------------------------
 SWEP.Spawnable = true
-SWEP.ViewModel = Model("models/weapons/v_xengrenade.mdl")
-SWEP.WorldModel = "models/halo/covenant/halo2a/weapons/plasmagrenade/plasmagrenade.mdl"
+SWEP.ViewModel = Model("models/mos/weapons/ezplasmanade/v_xengrenade.mdl")
+SWEP.WorldModel = "models/mos/weapons/halo/covenant/halo2a/weapons/plasmagrenade/plasmagrenade.mdl"
 SWEP.SwayScale = 2
 SWEP.BobScale = 1
 SWEP.Slot = 2 -- 1 for handguns, 2 for rifles
@@ -43,7 +43,7 @@ SWEP.ViewModelBoneMods = {
 SWEP.VElements = {
 	["plasmanade"] = {
 		type = "Model",
-		model = "models/halo/covenant/halo2a/weapons/plasmagrenade/plasmagrenade.mdl",
+		model = "models/mos/weapons/halo/covenant/halo2a/weapons/plasmagrenade/plasmagrenade.mdl",
 		bone = "weapon",
 		rel = "",
 		pos = Vector(.805, .09, -.401),
@@ -60,7 +60,7 @@ SWEP.VElements = {
 SWEP.WElements = {
 	["plasmanade"] = {
 		type = "Model",
-		model = "models/halo/covenant/halo2a/weapons/plasmagrenade/plasmagrenade.mdl",
+		model = "models/mos/weapons/halo/covenant/halo2a/weapons/plasmagrenade/plasmagrenade.mdl",
 		bone = "ValveBiped.Anim_Attachment_RH",
 		rel = "",
 		pos = Vector(1.643, 0, .986),
@@ -97,13 +97,13 @@ function SWEP:Deploy()
 	timer.Simple(
 		.3,
 		function()
-			if not (self:IsValid() or self:GetOwner():IsValid()) then return end
+			if not (IsValid(self) or self:GetOwner():IsValid()) then return end
 			self:SendWeaponAnim(ACT_VM_PULLBACK_HIGH)
 			self:GetOwner():GetViewModel():SetPlaybackRate(.8)
 			timer.Simple(
 				.3,
 				function()
-					if not (self:IsValid() or self:GetOwner():IsValid()) then return end
+					if not (IsValid(self) or self:GetOwner():IsValid()) then return end
 					self:EmitSound("jids/snd_jack_beginice.wav", 60, 100)
 				end
 			)
@@ -112,7 +112,7 @@ function SWEP:Deploy()
 end
 
 function SWEP:OnDrop()
-	if CLIENT or not self:IsValid() then return end
+	if CLIENT or not IsValid(self) then return end
 	local Ent = ents.Create(self.ENT)
 	Ent:SetPos(self:GetPos())
 	Ent:SetAngles(self:GetAngles())
@@ -125,7 +125,7 @@ function SWEP:OnDrop()
 end
 
 function SWEP:ThrowNade()
-	if not (self:IsValid() or self:GetOwner():IsValid()) then return end
+	if not (IsValid(self) or self:GetOwner():IsValid()) then return end
 	if CLIENT then return end
 	grenade = ents.Create("ent_mann_gmod_ezplasmanade")
 	local v = self:GetOwner():GetShootPos()
@@ -161,7 +161,7 @@ function SWEP:Throw()
 	timer.Simple(
 		.1,
 		function()
-			if not (self:IsValid() or Owner:IsValid()) then return end
+			if not (IsValid(self) or Owner:IsValid()) then return end
 			self:ThrowNade()
 		end
 	)
@@ -178,7 +178,7 @@ function SWEP:PrimaryAttack()
 	timer.Simple(
 		.6,
 		function()
-			if not (self:IsValid() or Owner:IsValid()) then return end
+			if not (IsValid(self) or Owner:IsValid()) then return end
 			if CLIENT then return end
 			if Owner:HasWeapon("wep_jack_gmod_hands") then
 				Owner:SelectWeapon("wep_jack_gmod_hands")

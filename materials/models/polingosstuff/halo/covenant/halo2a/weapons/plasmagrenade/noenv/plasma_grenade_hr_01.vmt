@@ -1,0 +1,14 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models\PolingosStuff\Halo\Covenant\Halo2A\Weapons\PlasmaGrenade\plasma_grenade_hr_01"
+	"$bumpmap" "models\PolingosStuff\Halo\Covenant\Halo2A\Weapons\PlasmaGrenade\plasma_grenade_hr_01_n"
+	
+	"$phongdisablehalflambert"	"1"
+
+	"$phongexponenttexture" "models\PolingosStuff\Halo\Covenant\Halo2A\Weapons\PlasmaGrenade\plasma_grenade_hr_01_exp"
+
+	"$phong" "1"
+	"$phongboost"	"8"
+
+	"$phongfresnelranges"	"[0.0 0.07 1]"
+}
