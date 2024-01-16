@@ -89,7 +89,7 @@ NPC.CanOpenDoors = true -- Can open regular doors
 NPC.CanOpenAutoDoors = true -- Can open auto doors
 NPC.CanUse = true -- Can push buttons, pull levers, etc
 NPC.m_fMaxYawSpeed = 8 -- Max turning speed
----------------------------------------
+--]]==============================================================================================]]
 local ShouldHaveRadioSound = {
 	["LostEnemySounds"] = true,
 	["OnReloadSounds"] = true,

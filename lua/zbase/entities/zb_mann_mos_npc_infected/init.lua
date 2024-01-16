@@ -48,7 +48,7 @@ NPC.BloodColor = BLOOD_COLOR_ZOMBIE -- DONT_BLEED || BLOOD_COLOR_RED || BLOOD_CO
 NPC.m_fMaxYawSpeed = 6 -- Max turning speed
 NPC.FootStepSoundDelay_Walk = 0.4 -- Step cooldown when walking
 NPC.FootStepSoundDelay_Run = 0.3 -- Step cooldown when running
----------------------------------------
+--]]==============================================================================================]]
 function NPC:DoMoveSpeed()
 	local TimeLastMovement = self:GetInternalVariable("m_flTimeLastMovement")
 	self:SetPlaybackRate(1.5)

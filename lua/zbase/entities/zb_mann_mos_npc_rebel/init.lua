@@ -94,7 +94,12 @@ NPC.CanOpenDoors = true -- Can open regular doors
 NPC.CanOpenAutoDoors = true -- Can open auto doors
 NPC.CanUse = true -- Can push buttons, pull levers, etc
 NPC.m_fMaxYawSpeed = 8 -- Max turning speed
----------------------------------------
+--]]==============================================================================================]]
+function NPC:CustomInitialize()
+	self:SetSkin(math.random(0, 1))
+end
+
+--]]==============================================================================================]]
 local ShouldHaveRadioSound = {
 	["LostEnemySounds"] = true,
 	["OnReloadSounds"] = true,
@@ -104,11 +109,6 @@ local ShouldHaveRadioSound = {
 	["KilledEnemySounds"] = true,
 	["OnGrenadeSounds"] = true
 }
-
---]]==============================================================================================]]
-function NPC:CustomInitialize()
-	self:SetSkin(math.random(0, 1))
-end
 
 --]]==============================================================================================]]
 function NPC:CustomOnSoundEmitted(sndData, duration, sndVarName)
