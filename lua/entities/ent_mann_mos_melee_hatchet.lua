@@ -1,8 +1,5 @@
 -- Mannytko 2024
-if SERVER then
-	AddCSLuaFile()
-end
-
+if SERVER then AddCSLuaFile() end
 ENT.Base = "ent_mann_mos_melee_base" -- Base
 -- Info
 ENT.Type = "anim"
@@ -21,6 +18,4 @@ ENT.JModPreferredCarryAngles = Angle(30, 20, 30)
 ENT.Damage = 34
 ENT.DMGType = DMG_SLASH -- DMG_CLUB for blunt damage, DMG_SLASH for sharp damage
 -------------------------------------
-if CLIENT then
-	language.Add("ent_mann_mos_melee_hatchet", "Hatchet")
-end
+if CLIENT then language.Add("ent_mann_mos_melee_hatchet", "Hatchet") end

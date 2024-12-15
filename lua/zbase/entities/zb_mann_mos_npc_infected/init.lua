@@ -31,7 +31,10 @@ NPC.DamageScaling = {
 NPC.PhysDamageScale = 1.5 -- Damage scale from props
 ---------------------------------------
 NPC.MeleeDamage = {15, 25}
-NPC.MeleeWeaponAnimations = {"fastattack"} -- Animations to use when attacking with a melee weapon
+NPC.MeleeWeaponAnimations = {
+	"fastattack" -- Animations to use when attacking with a melee weapon
+}
+
 NPC.MeleeAttackAnimations = {"fastattack"}
 ---------------------------------------
 -- Health regen

@@ -3,33 +3,34 @@ local NPC = FindZBaseTable(debug.getinfo(1, 'S'))
 NPC.Class = "npc_metropolice"
 NPC.Name = "M.A.N.N. Security Unit" -- Name of your NPC
 NPC.Category = "M.A.N.N. Offense Solutions - NPCs" -- Category in the ZBase tab
-NPC.Weapons = {"wep_mann_mos_gun_hg22"} -- Example: {"weapon_rpg", "weapon_crowbar", "weapon_crossbow"}
+NPC.Weapons = {
+	"wep_mann_mos_gun_hg22" -- Example: {"weapon_rpg", "weapon_crowbar", "weapon_crossbow"}
+}
+
 NPC.Inherit = "npc_zbase" -- Inherit features from any existing zbase npc
 local eyevector = Vector(0, 0, -6)
 local eyecolor = Color(0, 165, 255)
 -- format: multiline
 ZBaseAddGlowingEye(
-	"MOS_SecurityEyeLight",
-	"models/mos/npcs/frosty/sparbines/mos_security.mdl",
-	false,
-	"b_helmet",
-	eyevector,
-	9,
+	"MOS_SecurityEyeLight", 
+	"models/mos/npcs/frosty/sparbines/mos_security.mdl", 
+	false, 
+	"b_helmet", 
+	eyevector, 
+	9, 
 	eyecolor
 )
 
 --]]==============================================================================================]]
 local function MOSCreateSecuritySounds(name, tbl)
-	sound.Add(
-		{
-			name = name,
-			channel = CHAN_VOICE,
-			volume = .55,
-			level = 90,
-			pitch = {105, 115},
-			sound = tbl
-		}
-	)
+	sound.Add({
+		name = name,
+		channel = CHAN_VOICE,
+		volume = .55,
+		level = 90,
+		pitch = {105, 115},
+		sound = tbl
+	})
 end
 
 --]]==============================================================================================]]
@@ -56,7 +57,7 @@ sound.Add(
 --]]==============================================================================================]]
 -- format: multiline
 MOSCreateSecuritySounds(
-	"ZBaseMOSSecurity.Question",
+	"ZBaseMOSSecurity.Question", 
 	{
 		"npc/metropolice/vo/dispupdatingapb.wav",
 		"npc/metropolice/vo/pickingupnoncorplexindy.wav",
@@ -84,7 +85,7 @@ MOSCreateSecuritySounds(
 --]]==============================================================================================]]
 -- format: multiline
 MOSCreateSecuritySounds(
-	"ZBaseMOSSecurity.Answer",
+	"ZBaseMOSSecurity.Answer", 
 	{
 		"npc/metropolice/vo/rodgerthat.wav",
 	}
@@ -93,7 +94,7 @@ MOSCreateSecuritySounds(
 --]]==============================================================================================]]
 -- format: multiline
 MOSCreateSecuritySounds(
-	"ZBaseMOSSecurity.Alert",
+	"ZBaseMOSSecurity.Alert", 
 	{
 		"npc/metropolice/vo/allunitscloseonsuspect.wav",
 		"npc/metropolice/vo/allunitsmovein.wav",
@@ -114,7 +115,7 @@ MOSCreateSecuritySounds(
 --]]==============================================================================================]]
 -- format: multiline
 MOSCreateSecuritySounds(
-	"ZBaseMOSSecurity.KillEnemy",
+	"ZBaseMOSSecurity.KillEnemy", 
 	{
 		"npc/metropolice/vo/chuckle.wav",
 		"npc/metropolice/vo/suspectisbleeding.wav",
@@ -125,7 +126,7 @@ MOSCreateSecuritySounds(
 --]]==============================================================================================]]
 -- format: multiline
 MOSCreateSecuritySounds(
-	"ZBaseMOSSecurity.HearSound",
+	"ZBaseMOSSecurity.HearSound", 
 	{
 		"npc/metropolice/vo/requestsecondaryviscerator.wav",
 		"npc/metropolice/vo/goingtotakealook.wav",

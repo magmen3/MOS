@@ -25,10 +25,21 @@ NPC.HasArmor = {
 NPC.BaseRangeAttack = true -- Use ZBase range attack system
 NPC.RangeAttackFaceEnemy = false -- Should it face enemy while doing the range attack?
 NPC.RangeAttackTurnSpeed = 15 -- Speed that it turns while trying to face the enemy when range attacking
-NPC.RangeAttackDistance = {650, 1200} -- Distance that it initiates the range attack {min, max}
-NPC.RangeAttackCooldown = {7, 16} -- Range attack cooldown {min, max}
+NPC.RangeAttackDistance = {
+	650, -- Distance that it initiates the range attack {min, max}
+	1200
+}
+
+NPC.RangeAttackCooldown = {
+	7, -- Range attack cooldown {min, max}
+	16
+}
+
 NPC.RangeAttackSuppressEnemy = true -- If the enemy can't be seen, target the last seen position
-NPC.RangeAttackAnimations = {"grenthrow"} -- Example: NPC.RangeAttackAnimations = {ACT_RANGE_ATTACK1}
+NPC.RangeAttackAnimations = {
+	"grenthrow" -- Example: NPC.RangeAttackAnimations = {ACT_RANGE_ATTACK1}
+}
+
 NPC.RangeAttackAnimationSpeed = 1.5 -- Speed multiplier for the range attack animation
 -- Time until the projectile code is ran
 -- Set to false to disable the timer (if you want to use animation events instead for example)
@@ -43,7 +54,10 @@ NPC.RangeProjectile_Inaccuracy = 12 -- Inaccuracy, 0 = perfect, higher numbers =
 NPC.BaseMeleeAttack = true
 NPC.MeleeDamage_Delay = .5
 NPC.MeleeAttackAnimations = {"melee_gunhit"}
-NPC.MeleeWeaponAnimations = {"melee_gunhit"} -- Animations to use when attacking with a melee weapon
+NPC.MeleeWeaponAnimations = {
+	"melee_gunhit" -- Animations to use when attacking with a melee weapon
+}
+
 NPC.OnMeleeSound_Chance = 2
 NPC.OnRangeSound_Chance = 3
 ---------------------------------------
@@ -114,13 +128,10 @@ local ShouldHaveRadioSound = {
 function NPC:CustomOnSoundEmitted(sndData, duration, sndVarName)
 	if ShouldHaveRadioSound[sndVarName] then
 		self:EmitSound("npc/metropolice/vo/on" .. math.random(1, 2) .. ".wav", 75, math.random(95, 105))
-		timer.Simple(
-			duration,
-			function()
-				if not IsValid(self) then return end
-				self:EmitSound("npc/metropolice/vo/off" .. math.random(1, 4) .. ".wav", 75, math.random(95, 105))
-			end
-		)
+		timer.Simple(duration, function()
+			if not IsValid(self) then return end
+			self:EmitSound("npc/metropolice/vo/off" .. math.random(1, 4) .. ".wav", 75, math.random(95, 105))
+		end)
 	end
 end
 
@@ -137,7 +148,5 @@ function NPC:RangeAttackProjectile()
 	proj:Prime()
 	proj:Arm()
 	local proj_phys = proj:GetPhysicsObject()
-	if IsValid(proj_phys) then
-		proj_phys:SetVelocity(self:RangeAttackProjectileVelocity() + Vector(0, 0, 200))
-	end
+	if IsValid(proj_phys) then proj_phys:SetVelocity(self:RangeAttackProjectileVelocity() + Vector(0, 0, 200)) end
 end

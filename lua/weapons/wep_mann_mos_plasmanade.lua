@@ -82,9 +82,7 @@ SWEP.ENT = "ent_mann_gmod_ezplasmanade"
 function SWEP:Initialize()
 	self:SetHoldType(self.HoldType)
 	local Owner = self:GetOwner()
-	if Owner:IsPlayer() then
-		self:SCKInitialize()
-	end
+	if Owner:IsPlayer() then self:SCKInitialize() end
 end
 
 function SWEP:Deploy()
@@ -94,21 +92,15 @@ function SWEP:Deploy()
 	self:SendWeaponAnim(ACT_VM_DRAW)
 	self:GetOwner():GetViewModel():SetPlaybackRate(.5)
 	self:SetNextPrimaryFire(CurTime() + 1.4)
-	timer.Simple(
-		.3,
-		function()
+	timer.Simple(.3, function()
+		if not (IsValid(self) or self:GetOwner():IsValid()) then return end
+		self:SendWeaponAnim(ACT_VM_PULLBACK_HIGH)
+		self:GetOwner():GetViewModel():SetPlaybackRate(.8)
+		timer.Simple(.3, function()
 			if not (IsValid(self) or self:GetOwner():IsValid()) then return end
-			self:SendWeaponAnim(ACT_VM_PULLBACK_HIGH)
-			self:GetOwner():GetViewModel():SetPlaybackRate(.8)
-			timer.Simple(
-				.3,
-				function()
-					if not (IsValid(self) or self:GetOwner():IsValid()) then return end
-					self:EmitSound("jids/snd_jack_beginice.wav", 60, 100)
-				end
-			)
-		end
-	)
+			self:EmitSound("jids/snd_jack_beginice.wav", 60, 100)
+		end)
+	end)
 end
 
 function SWEP:OnDrop()
@@ -124,47 +116,43 @@ function SWEP:OnDrop()
 	self:Remove()
 end
 
+local nadeang = Angle(45, 45, 0)
 function SWEP:ThrowNade()
-	if not (IsValid(self) or self:GetOwner():IsValid()) then return end
+	local Owner = self:GetOwner()
+	if not (IsValid(self) or Owner:IsValid()) then return end
 	if CLIENT then return end
 	grenade = ents.Create("ent_mann_gmod_ezplasmanade")
-	local v = self:GetOwner():GetShootPos()
-	v = v + self:GetOwner():GetForward() * 10
-	v = v + self:GetOwner():GetRight() * 10
-	v = v + self:GetOwner():GetUp() * 10
+	local v = Owner:GetShootPos()
+	v = v + Owner:GetForward() * 10
+	v = v + Owner:GetRight() * 10
+	v = v + Owner:GetUp() * 10
 	grenade:SetPos(v)
-	grenade:SetAngles(self:GetOwner():EyeAngles() + Angle(45, 45, 0))
-	grenade:SetOwner(self:GetOwner())
-	grenade:SetPhysicsAttacker(self:GetOwner())
-	grenade:SetOwner(self:GetOwner())
-	JMod.SetEZowner(grenade, self:GetOwner())
+	grenade:SetAngles(Owner:EyeAngles() + nadeang)
+	grenade:SetOwner(Owner)
+	grenade:SetPhysicsAttacker(Owner)
+	grenade:SetOwner(Owner)
+	JMod.SetEZowner(grenade, Owner)
 	grenade:Spawn()
 	grenade:Arm()
 	local phys = grenade:GetPhysicsObject()
 	if not IsValid(phys) then
 		grenade:Remove()
-
 		return
 	else
-		phys:SetVelocity(self:GetOwner():GetVelocity() + self:GetOwner():GetAimVector() * 800)
+		phys:SetVelocity(Owner:GetVelocity() + Owner:GetAimVector() * 800)
 		phys:AddAngleVelocity(VectorRand() * 200)
 	end
 end
 
+local vpang = Angle(10, 10, 0)
 function SWEP:Throw()
 	local Owner = self:GetOwner()
 	self:SendWeaponAnim(ACT_VM_THROW)
 	Owner:GetViewModel():SetPlaybackRate(.9)
 	self:EmitSound("snd_jack_grenadethrow.wav", 75, math.random(95, 105))
 	Owner:SetAnimation(PLAYER_ATTACK1)
-	Owner:ViewPunch(Angle(10, 10, 0))
-	timer.Simple(
-		.1,
-		function()
-			if not (IsValid(self) or Owner:IsValid()) then return end
-			self:ThrowNade()
-		end
-	)
+	Owner:ViewPunch(vpang)
+	self:ThrowNade()
 end
 
 function SWEP:PrimaryAttack()
@@ -175,18 +163,12 @@ function SWEP:PrimaryAttack()
 	self.Throwed = true
 	self:Throw()
 	Owner:SetAnimation(PLAYER_ATTACK1)
-	timer.Simple(
-		.6,
-		function()
-			if not (IsValid(self) or Owner:IsValid()) then return end
-			if CLIENT then return end
-			if Owner:HasWeapon("wep_jack_gmod_hands") then
-				Owner:SelectWeapon("wep_jack_gmod_hands")
-			end
-
-			self:Remove()
-		end
-	)
+	timer.Simple(.6, function()
+		if not (IsValid(self) or Owner:IsValid()) then return end
+		if CLIENT then return end
+		if Owner:HasWeapon("wep_jack_gmod_hands") then Owner:SelectWeapon("wep_jack_gmod_hands") end
+		self:Remove()
+	end)
 end
 
 function SWEP:SecondaryAttack()
@@ -218,15 +200,10 @@ end
 
 function SWEP:OnRemove()
 	local Owner = self:GetOwner()
-	if Owner:IsPlayer() then
-		self:SCKHolster()
-	end
-
+	if Owner:IsPlayer() then self:SCKHolster() end
 	if IsValid(Owner) and CLIENT and Owner:IsPlayer() then
 		local OwnerVM = Owner:GetViewModel()
-		if IsValid(OwnerVM) then
-			OwnerVM:SetMaterial("")
-		end
+		if IsValid(OwnerVM) then OwnerVM:SetMaterial("") end
 	end
 
 	-- ADDED :
@@ -235,9 +212,7 @@ function SWEP:OnRemove()
 		if self.VElements and self.VElements ~= nil then
 			for k, v in pairs(self.VElements) do
 				local model = v.modelEnt
-				if v.type == "Model" and IsValid(model) then
-					model:Remove()
-				end
+				if v.type == "Model" and IsValid(model) then model:Remove() end
 			end
 		end
 
@@ -245,9 +220,7 @@ function SWEP:OnRemove()
 		if self.WElements and self.WElements ~= nil then
 			for k, v in pairs(self.WElements) do
 				local model = v.modelEnt
-				if v.type == "Model" and IsValid(model) then
-					model:Remove()
-				end
+				if v.type == "Model" and IsValid(model) then model:Remove() end
 			end
 		end
 	end
@@ -261,11 +234,8 @@ function SWEP:Holster(wep)
 
 	if IsValid(Owner) and CLIENT and Owner:IsPlayer() then
 		local OwnerVM = Owner:GetViewModel()
-		if IsValid(OwnerVM) then
-			OwnerVM:SetMaterial("")
-		end
+		if IsValid(OwnerVM) then OwnerVM:SetMaterial("") end
 	end
-
 	return true
 end
 
@@ -278,19 +248,12 @@ function SWEP:GetViewModelPosition(pos, ang)
 	local NotReady = Owner:IsSprinting() or Owner:KeyDown(IN_ZOOM)
 	local DefOrigin = Owner:Crouching() and -.5 or 0
 	VMDownness = Lerp(FT * 2, VMDownness, NotReady and 4 or DefOrigin)
-	if not OldAng or OldAng == nil then
-		OldAng = ang
-	end
-
-	if not AngDiff or AngDiff == nil then
-		AngDiff = angle_zero
-	end
-
+	if not OldAng or OldAng == nil then OldAng = ang end
+	if not AngDiff or AngDiff == nil then AngDiff = angle_zero end
 	AngDiff = LerpAngle(FT * 2, AngDiff, ang - OldAng)
 	OldAng = ang
 	ang = ang - (AngDiff * (Owner:Ping() <= 30 and -4 or -3))
 	ang:RotateAroundAxis(ang:Right(), -VMDownness * 5)
-
 	return pos, ang
 end
 
@@ -303,18 +266,9 @@ function SWEP:PrintWeaponInfo(x, y, alpha)
 		local title_color = "<color=0, 165, 255, 255>"
 		local text_color = "<color=0, 135, 220, 255>"
 		str = "<font=MOS-HoloFontSmall>"
-		if self.Author ~= "" then
-			str = str .. title_color .. "Author:</color>\n" .. text_color .. self.Author .. "</color>\n\n"
-		end
-
-		if self.Purpose ~= "" then
-			str = str .. title_color .. "Description:</color>\n" .. text_color .. self.Purpose .. "</color>\n\n"
-		end
-
-		if self.Instructions ~= "" then
-			str = str .. title_color .. "Instruction:</color>\n" .. text_color .. self.Instructions .. "</color>\n"
-		end
-
+		if self.Author ~= "" then str = str .. title_color .. "Author:</color>\n" .. text_color .. self.Author .. "</color>\n\n" end
+		if self.Purpose ~= "" then str = str .. title_color .. "Description:</color>\n" .. text_color .. self.Purpose .. "</color>\n\n" end
+		if self.Instructions ~= "" then str = str .. title_color .. "Instruction:</color>\n" .. text_color .. self.Instructions .. "</color>\n" end
 		str = str .. "</font>"
 		self.InfoMarkup = markup.Parse(str, 250)
 	end
@@ -356,9 +310,7 @@ end
 function SWEP:SCKHolster()
 	if CLIENT and IsValid(self:GetOwner()) then
 		local vm = self:GetOwner():GetViewModel()
-		if IsValid(vm) then
-			self:ResetBonePositions(vm)
-		end
+		if IsValid(vm) then self:ResetBonePositions(vm) end
 	end
 end
 
@@ -373,15 +325,10 @@ function SWEP:SCKInitialize()
 		-- init view model bone build function
 		if IsValid(self:GetOwner()) then
 			local vm = self:GetOwner():GetViewModel()
-			if IsValid(vm) then
-				self:ResetBonePositions(vm)
-			end
-
+			if IsValid(vm) then self:ResetBonePositions(vm) end
 			-- Init viewmodel visibility
 			if self.ShowViewModel == nil or self.ShowViewModel then
-				if IsValid(vm) then
-					vm:SetColor(color_white)
-				end
+				if IsValid(vm) then vm:SetColor(color_white) end
 			else
 				-- we set the alpha to 1 instead of 0 because else ViewModelDrawn stops being called
 				vm:SetColor(Color(255, 255, 255, 1))
@@ -441,30 +388,20 @@ if CLIENT then
 					model:SetMaterial(v.material)
 				end
 
-				if v.skin and v.skin ~= model:GetSkin() then
-					model:SetSkin(v.skin)
-				end
-
+				if v.skin and v.skin ~= model:GetSkin() then model:SetSkin(v.skin) end
 				if v.bodygroup then
 					for k, v in pairs(v.bodygroup) do
-						if model:GetBodygroup(k) ~= v then
-							model:SetBodygroup(k, v)
-						end
+						if model:GetBodygroup(k) ~= v then model:SetBodygroup(k, v) end
 					end
 				end
 
-				if v.surpresslightning then
-					render.SuppressEngineLighting(true)
-				end
-
+				if v.surpresslightning then render.SuppressEngineLighting(true) end
 				render.SetColorModulation(v.color.r / 255, v.color.g / 255, v.color.b / 255)
 				render.SetBlend(v.color.a / 255)
 				model:DrawModel()
 				render.SetBlend(1)
 				render.SetColorModulation(1, 1, 1)
-				if v.surpresslightning then
-					render.SuppressEngineLighting(false)
-				end
+				if v.surpresslightning then render.SuppressEngineLighting(false) end
 			elseif v.type == "Sprite" and sprite then
 				local drawpos = pos + ang:Forward() * v.pos.x + ang:Right() * v.pos.y + ang:Up() * v.pos.z
 				render.SetMaterial(sprite)
@@ -483,10 +420,7 @@ if CLIENT then
 
 	SWEP.wRenderOrder = nil
 	function SWEP:SCKDrawWorldModel()
-		if self.ShowWorldModel == nil or self.ShowWorldModel then
-			self:DrawModel()
-		end
-
+		if self.ShowWorldModel == nil or self.ShowWorldModel then self:DrawModel() end
 		if not self.WElements then return end
 		if not self.wRenderOrder then
 			self.wRenderOrder = {}
@@ -541,30 +475,20 @@ if CLIENT then
 					model:SetMaterial(v.material)
 				end
 
-				if v.skin and v.skin ~= model:GetSkin() then
-					model:SetSkin(v.skin)
-				end
-
+				if v.skin and v.skin ~= model:GetSkin() then model:SetSkin(v.skin) end
 				if v.bodygroup then
 					for k, v in pairs(v.bodygroup) do
-						if model:GetBodygroup(k) ~= v then
-							model:SetBodygroup(k, v)
-						end
+						if model:GetBodygroup(k) ~= v then model:SetBodygroup(k, v) end
 					end
 				end
 
-				if v.surpresslightning then
-					render.SuppressEngineLighting(true)
-				end
-
+				if v.surpresslightning then render.SuppressEngineLighting(true) end
 				render.SetColorModulation(v.color.r / 255, v.color.g / 255, v.color.b / 255)
 				render.SetBlend(v.color.a / 255)
 				model:DrawModel()
 				render.SetBlend(1)
 				render.SetColorModulation(1, 1, 1)
-				if v.surpresslightning then
-					render.SuppressEngineLighting(false)
-				end
+				if v.surpresslightning then render.SuppressEngineLighting(false) end
 			elseif v.type == "Sprite" and sprite then
 				local drawpos = pos + ang:Forward() * v.pos.x + ang:Right() * v.pos.y + ang:Up() * v.pos.z
 				render.SetMaterial(sprite)
@@ -599,15 +523,11 @@ if CLIENT then
 			if not bone then return end
 			pos, ang = Vector(0, 0, 0), Angle(0, 0, 0)
 			local m = ent:GetBoneMatrix(bone)
-			if m then
-				pos, ang = m:GetTranslation(), m:GetAngles()
-			end
-
+			if m then pos, ang = m:GetTranslation(), m:GetAngles() end
 			if IsValid(self:GetOwner()) and self:GetOwner():IsPlayer() and ent == self:GetOwner():GetViewModel() and self.ViewModelFlip then
 				ang.r = -ang.r -- Fixes mirrored models
 			end
 		end
-
 		return pos, ang
 	end
 
@@ -688,17 +608,9 @@ if CLIENT then
 					end
 				end
 
-				if vm:GetManipulateBoneScale(bone) ~= s then
-					vm:ManipulateBoneScale(bone, s)
-				end
-
-				if vm:GetManipulateBoneAngles(bone) ~= v.angle then
-					vm:ManipulateBoneAngles(bone, v.angle)
-				end
-
-				if vm:GetManipulateBonePosition(bone) ~= p then
-					vm:ManipulateBonePosition(bone, p)
-				end
+				if vm:GetManipulateBoneScale(bone) ~= s then vm:ManipulateBoneScale(bone, s) end
+				if vm:GetManipulateBoneAngles(bone) ~= v.angle then vm:ManipulateBoneAngles(bone, v.angle) end
+				if vm:GetManipulateBonePosition(bone) ~= p then vm:ManipulateBonePosition(bone, p) end
 			end
 		else
 			self:ResetBonePositions(vm)

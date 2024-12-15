@@ -8,16 +8,14 @@ NPC.Inherit = "npc_zbase" -- Inherit features from any existing zbase npc
 NPC.m_iGrenadeCount = 0 -- thanks to zippy for help with grenades
 --]]==============================================================================================]]
 local function MOSCreateZombieSounds(name, tbl)
-	sound.Add(
-		{
-			name = name,
-			channel = CHAN_VOICE,
-			volume = .7,
-			level = 95,
-			pitch = {85, 95},
-			sound = tbl
-		}
-	)
+	sound.Add({
+		name = name,
+		channel = CHAN_VOICE,
+		volume = .7,
+		level = 95,
+		pitch = {85, 95},
+		sound = tbl
+	})
 end
 
 --]]==============================================================================================]]
@@ -43,7 +41,7 @@ sound.Add(
 --]]==============================================================================================]]
 -- format: multiline
 MOSCreateZombieSounds(
-	"ZBaseMOSZombie.Idle",
+	"ZBaseMOSZombie.Idle", 
 	{
 		"mos/npcs/mos_zombie/zombie_voice_idle1.wav",
 		"mos/npcs/mos_zombie/zombie_voice_idle2.wav",
@@ -65,7 +63,7 @@ MOSCreateZombieSounds(
 --]]==============================================================================================]]
 -- format: multiline
 MOSCreateZombieSounds(
-	"ZBaseMOSZombie.Alert",
+	"ZBaseMOSZombie.Alert", 
 	{
 		"mos/npcs/mos_zombie/zombie_alert1.wav",
 		"mos/npcs/mos_zombie/zombie_alert2.wav",
@@ -76,7 +74,7 @@ MOSCreateZombieSounds(
 --]]==============================================================================================]]
 -- format: multiline
 MOSCreateZombieSounds(
-	"ZBaseMOSZombie.Die",
+	"ZBaseMOSZombie.Die", 
 	{
 		"mos/npcs/mos_zombie/zombie_die1.wav",
 		"mos/npcs/mos_zombie/zombie_die2.wav",
@@ -87,7 +85,7 @@ MOSCreateZombieSounds(
 --]]==============================================================================================]]
 -- format: multiline
 MOSCreateZombieSounds(
-	"ZBaseMOSZombie.Pain",
+	"ZBaseMOSZombie.Pain", 
 	{
 		"mos/npcs/mos_zombie/zombie_pain1.wav",
 		"mos/npcs/mos_zombie/zombie_pain2.wav",
@@ -98,7 +96,7 @@ MOSCreateZombieSounds(
 --]]==============================================================================================]]
 -- format: multiline
 MOSCreateZombieSounds(
-	"ZBaseMOSZombie.Attack",
+	"ZBaseMOSZombie.Attack", 
 	{
 		"mos/npcs/zombie/claw_miss1.wav",
 		"mos/npcs/zombie/claw_miss2.wav",

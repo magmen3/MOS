@@ -7,45 +7,46 @@ local NPC = FindZBaseTable(debug.getinfo(1, 'S'))
 NPC.Class = "npc_combine_s"
 NPC.Name = "Rebellion Soldier" -- Name of your NPC
 NPC.Category = "M.A.N.N. Offense Solutions - NPCs" -- Category in the ZBase tab
-NPC.Weapons = {"wep_mann_mos_gun_hr103"} -- Example: {"weapon_rpg", "weapon_crowbar", "weapon_crossbow"}
+NPC.Weapons = {
+	"wep_mann_mos_gun_hr103" -- Example: {"weapon_rpg", "weapon_crowbar", "weapon_crossbow"}
+}
+
 NPC.Inherit = "npc_zbase" -- Inherit features from any existing zbase npc
 local eyevector = Vector(0, 2.5, -6)
 local eyevector2 = Vector(0, -2.5, -6)
 local eyecolor = Color(200, 0, 0)
 -- format: multiline
 ZBaseAddGlowingEye(
-	"MOS_RebelEyeLight",
-	"models/mos/npcs/frosty/sparbines/mos_rebelsoldier.mdl",
-	false,
-	"b_helmet",
-	eyevector,
-	10,
+	"MOS_RebelEyeLight", 
+	"models/mos/npcs/frosty/sparbines/mos_rebelsoldier.mdl", 
+	false, 
+	"b_helmet", 
+	eyevector, 
+	10, 
 	eyecolor
 )
 
 -- format: multiline
 ZBaseAddGlowingEye(
-	"MOS_RebelEyeLight2",
-	"models/mos/npcs/frosty/sparbines/mos_rebelsoldier.mdl",
-	false,
-	"b_helmet",
-	eyevector2,
-	8,
+	"MOS_RebelEyeLight2", 
+	"models/mos/npcs/frosty/sparbines/mos_rebelsoldier.mdl", 
+	false, 
+	"b_helmet", 
+	eyevector2, 
+	8, 
 	eyecolor
 )
 
 --]]==============================================================================================]]
 local function MOSCreateRebelSounds(name, tbl)
-	sound.Add(
-		{
-			name = name,
-			channel = CHAN_VOICE,
-			volume = .75,
-			level = 90,
-			pitch = {80, 95},
-			sound = tbl
-		}
-	)
+	sound.Add({
+		name = name,
+		channel = CHAN_VOICE,
+		volume = .75,
+		level = 90,
+		pitch = {80, 95},
+		sound = tbl
+	})
 end
 
 --]]==============================================================================================]]
@@ -72,7 +73,7 @@ sound.Add(
 --]]==============================================================================================]]
 -- format: multiline
 MOSCreateRebelSounds(
-	"ZBaseMOSRebelSoldier.Question",
+	"ZBaseMOSRebelSoldier.Question", 
 	{
 		"npc/elitepolice/mc1que_stimpatch.wav",
 		"npc/elitepolice/mc1que_stomach.wav",
@@ -99,7 +100,7 @@ MOSCreateRebelSounds(
 --]]==============================================================================================]]
 -- format: multiline
 MOSCreateRebelSounds(
-	"ZBaseMOSRebelSoldier.Answer",
+	"ZBaseMOSRebelSoldier.Answer", 
 	{
 		"npc/elitepolice/mc1ans_yeah.wav",
 		"npc/elitepolice/mc1ans_yep.wav",
@@ -135,7 +136,7 @@ MOSCreateRebelSounds(
 --]]==============================================================================================]]
 -- format: multiline
 MOSCreateRebelSounds(
-	"ZBaseMOSRebelSoldier.Alert",
+	"ZBaseMOSRebelSoldier.Alert", 
 	{
 		"npc/elitepolice/deploy01.wav",
 		"npc/elitepolice/deploy04.wav",
@@ -154,7 +155,7 @@ MOSCreateRebelSounds(
 --]]==============================================================================================]]
 -- format: multiline
 MOSCreateRebelSounds(
-	"ZBaseMOSRebelSoldier.AlertArmed",
+	"ZBaseMOSRebelSoldier.AlertArmed", 
 	{
 		"npc/elitepolice/dropweapon.wav",
 		"npc/elitepolice/freeze.wav",
@@ -167,7 +168,7 @@ MOSCreateRebelSounds(
 --]]==============================================================================================]]
 -- format: multiline
 MOSCreateRebelSounds(
-	"ZBaseMOSRebelSoldier.IdleEnemy",
+	"ZBaseMOSRebelSoldier.IdleEnemy", 
 	{
 		"npc/elitepolice/deploy01.wav",
 		"npc/elitepolice/deploy04.wav",
@@ -186,7 +187,7 @@ MOSCreateRebelSounds(
 --]]==============================================================================================]]
 -- format: multiline
 MOSCreateRebelSounds(
-	"ZBaseMOSRebelSoldier.IdleEnemyOccluded",
+	"ZBaseMOSRebelSoldier.IdleEnemyOccluded", 
 	{
 		"npc/elitepolice/hiding03.wav",
 		"npc/elitepolice/hiding01.wav",
@@ -197,7 +198,7 @@ MOSCreateRebelSounds(
 --]]==============================================================================================]]
 -- format: multiline
 MOSCreateRebelSounds(
-	"ZBaseMOSRebelSoldier.LostEnemy",
+	"ZBaseMOSRebelSoldier.LostEnemy", 
 	{
 		"npc/elitepolice/pointer04.wav",
 		"npc/elitepolice/pointer06.wav",
@@ -207,7 +208,7 @@ MOSCreateRebelSounds(
 --]]==============================================================================================]]
 -- format: multiline
 MOSCreateRebelSounds(
-	"ZBaseMOSRebelSoldier.KilledEnemy",
+	"ZBaseMOSRebelSoldier.KilledEnemy", 
 	{
 		"npc/elitepolice/shooter01.wav",
 		"npc/elitepolice/shooter02.wav",
@@ -219,7 +220,7 @@ MOSCreateRebelSounds(
 --]]==============================================================================================]]
 -- format: multiline
 MOSCreateRebelSounds(
-	"ZBaseMOSRebelSoldier.AllyDeath",
+	"ZBaseMOSRebelSoldier.AllyDeath", 
 	{
 		"npc/elitepolice/mc1ans_dontberidic.wav",
 		"npc/elitepolice/mc1ans_huhfigures.wav",
@@ -230,7 +231,7 @@ MOSCreateRebelSounds(
 --]]==============================================================================================]]
 -- format: multiline
 MOSCreateRebelSounds(
-	"ZBaseMOSRebelSoldier.SeeDanger",
+	"ZBaseMOSRebelSoldier.SeeDanger", 
 	{
 		"npc/elitepolice/pain3.wav",
 		"npc/elitepolice/pain4.wav",
@@ -250,7 +251,7 @@ MOSCreateRebelSounds(
 --]]==============================================================================================]]
 -- format: multiline
 MOSCreateRebelSounds(
-	"ZBaseMOSRebelSoldier.HearDanger",
+	"ZBaseMOSRebelSoldier.HearDanger", 
 	{
 		"npc/elitepolice/deploy01.wav",
 		"npc/elitepolice/deploy04.wav",
@@ -264,7 +265,7 @@ MOSCreateRebelSounds(
 --]]==============================================================================================]]
 -- format: multiline
 MOSCreateRebelSounds(
-	"ZBaseMOSRebelSoldier.Pain",
+	"ZBaseMOSRebelSoldier.Pain", 
 	{
 		"npc/elitepolice/knockout3.wav",
 		"npc/elitepolice/knockout1.wav",
@@ -275,7 +276,7 @@ MOSCreateRebelSounds(
 --]]==============================================================================================]]
 -- format: multiline
 MOSCreateRebelSounds(
-	"ZBaseMOSRebelSoldier.Death",
+	"ZBaseMOSRebelSoldier.Death", 
 	{
 		"npc/elitepolice/die4.wav",
 		"npc/elitepolice/die1.wav",
@@ -287,7 +288,7 @@ MOSCreateRebelSounds(
 --]]==============================================================================================]]
 -- format: multiline
 MOSCreateRebelSounds(
-	"ZBaseMOSRebelSoldier.FireDeath",
+	"ZBaseMOSRebelSoldier.FireDeath", 
 	{
 		"npc/elitepolice/fire_scream1.wav",
 		"npc/elitepolice/fire_scream2.wav",
@@ -298,7 +299,7 @@ MOSCreateRebelSounds(
 --]]==============================================================================================]]
 -- format: multiline
 MOSCreateRebelSounds(
-	"ZBaseMOSRebelSoldier.Deploy",
+	"ZBaseMOSRebelSoldier.Deploy", 
 	{
 		"npc/elitepolice/deploy06.wav",
 		"npc/elitepolice/deploy01.wav",

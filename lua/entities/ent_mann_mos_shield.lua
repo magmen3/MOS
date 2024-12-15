@@ -1,8 +1,5 @@
 -- Mannytko 2024
-if SERVER then
-	AddCSLuaFile()
-end
-
+if SERVER then AddCSLuaFile() end
 -- Riot Shield
 ENT.Type = "anim"
 ENT.PrintName = "Riot Shield"
@@ -22,7 +19,6 @@ if SERVER then
 		JMod.SetEZowner(ent, ply)
 		ent:Spawn()
 		ent:Activate()
-
 		return ent
 	end
 
@@ -47,9 +43,7 @@ if SERVER then
 	end
 
 	function ENT:PhysicsCollide(data, physobj)
-		if data.DeltaTime > .3 and data.Speed > 200 then
-			self:EmitSound(Sound("SolidMetal.ImpactHard"))
-		end
+		if data.DeltaTime > .3 and data.Speed > 200 then self:EmitSound(Sound("SolidMetal.ImpactHard")) end
 	end
 
 	function ENT:OnTakeDamage(dmginfo)
@@ -83,12 +77,8 @@ if SERVER then
 	end
 
 	function ENT:Think()
-		if self:IsOnFire() then
-			self:Extinguish()
-		end
-
+		if self:IsOnFire() then self:Extinguish() end
 		self:NextThink(CurTime() + .5)
-
 		return true
 	end
 else

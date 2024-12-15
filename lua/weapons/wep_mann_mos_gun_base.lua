@@ -1,8 +1,5 @@
 -- Mannytko 2024
-if SERVER then
-	AddCSLuaFile()
-end
-
+if SERVER then AddCSLuaFile() end
 -- M.A.N.N. Offense Solutions SWEP gun base
 SWEP.Base = "weapon_zbase"
 --------------------------------------------------
@@ -92,10 +89,7 @@ function SWEP:Initialize()
 	self:SetHoldType(self.HoldType)
 	self:SetReady(true)
 	self:SetReloading(false)
-	if self:GetOwner():IsPlayer() then
-		self:SCKInitialize()
-	end
-
+	if self:GetOwner():IsPlayer() then self:SCKInitialize() end
 	self.SNDPitch = self.MannCorp and self.SNDPitch or self.SNDPitch - 15
 end
 
@@ -120,15 +114,10 @@ end
 
 function SWEP:OnRemove()
 	local Owner = self:GetOwner()
-	if Owner:IsPlayer() then
-		self:SCKHolster()
-	end
-
+	if Owner:IsPlayer() then self:SCKHolster() end
 	if IsValid(Owner) and CLIENT and Owner:IsPlayer() then
 		local OwnerVM = Owner:GetViewModel()
-		if IsValid(OwnerVM) then
-			OwnerVM:SetMaterial("")
-		end
+		if IsValid(OwnerVM) then OwnerVM:SetMaterial("") end
 	end
 
 	-- ADDED :
@@ -137,9 +126,7 @@ function SWEP:OnRemove()
 		if self.VElements and self.VElements ~= nil then
 			for k, v in pairs(self.VElements) do
 				local model = v.modelEnt
-				if v.type == "Model" and IsValid(model) then
-					model:Remove()
-				end
+				if v.type == "Model" and IsValid(model) then model:Remove() end
 			end
 		end
 
@@ -147,9 +134,7 @@ function SWEP:OnRemove()
 		if self.WElements and self.WElements ~= nil then
 			for k, v in pairs(self.WElements) do
 				local model = v.modelEnt
-				if v.type == "Model" and IsValid(model) then
-					model:Remove()
-				end
+				if v.type == "Model" and IsValid(model) then model:Remove() end
 			end
 		end
 	end
@@ -158,17 +143,11 @@ end
 function SWEP:Holster(wep)
 	-- Not calling OnRemove to keep the models
 	local Owner = self:GetOwner()
-	if Owner:IsPlayer() then
-		self:SCKHolster()
-	end
-
+	if Owner:IsPlayer() then self:SCKHolster() end
 	if IsValid(Owner) and CLIENT and Owner:IsPlayer() then
 		local OwnerVM = Owner:GetViewModel()
-		if IsValid(OwnerVM) then
-			OwnerVM:SetMaterial("")
-		end
+		if IsValid(OwnerVM) then OwnerVM:SetMaterial("") end
 	end
-
 	return true
 end
 
@@ -197,9 +176,7 @@ function SWEP:DoVMAnimation(anim)
 	local Owner = self:GetOwner()
 	if not Owner:IsPlayer() then return end
 	local OwnerVM = Owner:GetViewModel()
-	if IsValid(Owner) and IsValid(OwnerVM) then
-		OwnerVM:SendViewModelMatchingSequence(OwnerVM:LookupSequence(anim))
-	end
+	if IsValid(Owner) and IsValid(OwnerVM) then OwnerVM:SendViewModelMatchingSequence(OwnerVM:LookupSequence(anim)) end
 end
 
 function SWEP:CustomShootEffects()
@@ -237,7 +214,6 @@ function SWEP:CustomShootEffects()
 				MuzzleLight.style = 0
 			end
 		end
-
 		return true
 	end
 
@@ -246,17 +222,12 @@ end
 
 function SWEP:CanPrimaryAttack()
 	local Owner = self:GetOwner()
-	if Owner:IsPlayer() then
-		if self:GetReloading() or self:GetOwner():IsSprinting() or not self:GetReady() then return false end
-	end
-
+	if Owner:IsPlayer() then if self:GetReloading() or Owner:IsSprinting() or not self:GetReady() then return false end end
 	if self:Clip1() <= 0 then
 		self:EmitSound(self.EmptySound, 70, self.SNDPitch, 1, CHAN_AUTO)
 		self:SetNextPrimaryFire(CurTime() + .3)
-
 		return false
 	end
-
 	return true
 end
 
@@ -281,18 +252,9 @@ function SWEP:OnPrimaryAttack()
 		}
 
 		self:FireBullets(bullet)
-		if self.Primary.TakeAmmoPerShot > 0 then
-			self:TakePrimaryAmmo(self.Primary.TakeAmmoPerShot)
-		end
-
-		if self.RecoilHeat >= 2 then
-			self:SetNextPrimaryFire(CurTime() + self.RPM + 1)
-		end
-
-		if self.RecoilHeat <= 3 then
-			self.RecoilHeat = self.RecoilHeat + .15 * (self.RecoilHeatMul or 1)
-		end
-
+		if self.Primary.TakeAmmoPerShot > 0 then self:TakePrimaryAmmo(self.Primary.TakeAmmoPerShot) end
+		if self.RecoilHeat >= 2 then self:SetNextPrimaryFire(CurTime() + self.RPM + 1) end
+		if self.RecoilHeat <= 3 then self.RecoilHeat = self.RecoilHeat + .15 * (self.RecoilHeatMul or 1) end
 		local FTSV = FrameTime()
 		local VMRecoil = (-self.Recoil - (self.RecoilHeat / 2)) * (self.VMRecoilMul or 1) * (Owner:Ping() <= 30 and 2 or .8)
 		VMDownness = Lerp(FTSV * 2, VMDownness, VMRecoil)
@@ -307,10 +269,7 @@ local NextThink = 0
 function SWEP:CustomThink()
 	local Owner = self:GetOwner()
 	if not (IsValid(Owner) or Owner:IsPlayer()) then return end
-	if self.RecoilHeat >= .01 then
-		self.RecoilHeat = self.RecoilHeat - .01
-	end
-
+	if self.RecoilHeat >= .01 then self.RecoilHeat = self.RecoilHeat - .01 end
 	if CLIENT and self.Light then
 		local r, g, b = self.MannCorp and 0 or 190, self.MannCorp and 165 or 0, self.MannCorp and 255 or 0 -- funi
 		local HoloLight = DynamicLight(self:EntIndex())
@@ -352,32 +311,25 @@ function SWEP:Reload()
 		Owner:GetViewModel():SetPlaybackRate(self.ReloadAnimRate)
 		self:SetSequence("idle") -- Fixes bug with worldmodels that have animations
 		self:EmitSound(self.NPCReloadSound, 65, self.SNDPitch, 1, CHAN_ITEM)
-		timer.Simple(
-			self.ReloadTime,
-			function()
-				if not (IsValid(self) and IsValid(Owner)) or Owner:GetActiveWeapon():GetClass() ~= self:GetClass() then
-					self:SetReady(true)
-					self:SetReloading(false)
-
-					return
-				end
-
-				if self.RecoilHeat >= 0 then
-					self.RecoilHeat = 0
-				end
-
+		timer.Simple(self.ReloadTime, function()
+			if not (IsValid(self) and IsValid(Owner)) or Owner:GetActiveWeapon():GetClass() ~= self:GetClass() then
 				self:SetReady(true)
 				self:SetReloading(false)
-				local Missing, Have = self.Primary.ClipSize - self:Clip1(), Owner:GetAmmoCount(self.Primary.Ammo)
-				if Missing <= Have then
-					Owner:RemoveAmmo(Missing, self.Primary.Ammo)
-					self:SetClip1(self.Primary.ClipSize)
-				elseif Missing > Have then
-					self:SetClip1(self:Clip1() + Have)
-					Owner:RemoveAmmo(Have, self.Primary.Ammo)
-				end
+				return
 			end
-		)
+
+			if self.RecoilHeat >= 0 then self.RecoilHeat = 0 end
+			self:SetReady(true)
+			self:SetReloading(false)
+			local Missing, Have = self.Primary.ClipSize - self:Clip1(), Owner:GetAmmoCount(self.Primary.Ammo)
+			if Missing <= Have then
+				Owner:RemoveAmmo(Missing, self.Primary.Ammo)
+				self:SetClip1(self.Primary.ClipSize)
+			elseif Missing > Have then
+				self:SetClip1(self:Clip1() + Have)
+				Owner:RemoveAmmo(Have, self.Primary.Ammo)
+			end
+		end)
 	end
 end
 
@@ -390,19 +342,12 @@ function SWEP:GetViewModelPosition(pos, ang)
 	local NotReady = Owner:IsSprinting() or Owner:KeyDown(IN_ZOOM) or (not self.ShowReloadAnim and self:GetReloading())
 	local DefOrigin = Owner:Crouching() and -.5 or 0
 	VMDownness = Lerp(FT * 2, VMDownness, NotReady and self.SprintVMDownAmt or DefOrigin - (self.VMUp or 0))
-	if not OldAng or OldAng == nil then
-		OldAng = ang
-	end
-
-	if not AngDiff or AngDiff == nil then
-		AngDiff = angle_zero
-	end
-
+	if not OldAng or OldAng == nil then OldAng = ang end
+	if not AngDiff or AngDiff == nil then AngDiff = angle_zero end
 	AngDiff = LerpAngle(FT * 2, AngDiff, ang - OldAng)
 	OldAng = ang
 	ang = ang - (AngDiff * (Owner:Ping() <= 30 and -4 or -3))
 	ang:RotateAroundAxis(ang:Right(), -VMDownness * 5)
-
 	return pos, ang
 end
 
@@ -415,18 +360,9 @@ function SWEP:PrintWeaponInfo(x, y, alpha)
 		local title_color = "<color=0, 165, 255, 255>"
 		local text_color = "<color=0, 135, 220, 255>"
 		str = "<font=MOS-HoloFontSmall>"
-		if self.Author ~= "" then
-			str = str .. title_color .. "Author:</color>\n" .. text_color .. self.Author .. "</color>\n\n"
-		end
-
-		if self.Purpose ~= "" then
-			str = str .. title_color .. "Description:</color>\n" .. text_color .. self.Purpose .. "</color>\n\n"
-		end
-
-		if self.Instructions ~= "" then
-			str = str .. title_color .. "Instruction:</color>\n" .. text_color .. self.Instructions .. "</color>\n"
-		end
-
+		if self.Author ~= "" then str = str .. title_color .. "Author:</color>\n" .. text_color .. self.Author .. "</color>\n\n" end
+		if self.Purpose ~= "" then str = str .. title_color .. "Description:</color>\n" .. text_color .. self.Purpose .. "</color>\n\n" end
+		if self.Instructions ~= "" then str = str .. title_color .. "Instruction:</color>\n" .. text_color .. self.Instructions .. "</color>\n" end
 		str = str .. "</font>"
 		self.InfoMarkup = markup.Parse(str, 250)
 	end
@@ -468,12 +404,11 @@ end
 function SWEP:SCKHolster()
 	if CLIENT and IsValid(self:GetOwner()) then
 		local vm = self:GetOwner():GetViewModel()
-		if IsValid(vm) then
-			self:ResetBonePositions(vm)
-		end
+		if IsValid(vm) then self:ResetBonePositions(vm) end
 	end
 end
 
+local blackalpha = Color(255, 255, 255, 1)
 function SWEP:SCKInitialize()
 	if CLIENT then
 		-- Create a new table for every weapon instance
@@ -485,18 +420,13 @@ function SWEP:SCKInitialize()
 		-- init view model bone build function
 		if IsValid(self:GetOwner()) then
 			local vm = self:GetOwner():GetViewModel()
-			if IsValid(vm) then
-				self:ResetBonePositions(vm)
-			end
-
+			if IsValid(vm) then self:ResetBonePositions(vm) end
 			-- Init viewmodel visibility
 			if self.ShowViewModel == nil or self.ShowViewModel then
-				if IsValid(vm) then
-					vm:SetColor(color_white)
-				end
+				if IsValid(vm) then vm:SetColor(color_white) end
 			else
 				-- we set the alpha to 1 instead of 0 because else ViewModelDrawn stops being called
-				vm:SetColor(Color(255, 255, 255, 1))
+				vm:SetColor(blackalpha)
 				-- ^ stopped working in GMod 13 because you have to do Entity:SetRenderMode(1) for translucency to kick in
 				-- however for some reason the view model resets to render mode 0 every frame so we just apply a debug material to prevent it from drawing
 				vm:SetMaterial("Debug/hsv")
@@ -553,30 +483,20 @@ if CLIENT then
 					model:SetMaterial(v.material)
 				end
 
-				if v.skin and v.skin ~= model:GetSkin() then
-					model:SetSkin(v.skin)
-				end
-
+				if v.skin and v.skin ~= model:GetSkin() then model:SetSkin(v.skin) end
 				if v.bodygroup then
 					for k, v in pairs(v.bodygroup) do
-						if model:GetBodygroup(k) ~= v then
-							model:SetBodygroup(k, v)
-						end
+						if model:GetBodygroup(k) ~= v then model:SetBodygroup(k, v) end
 					end
 				end
 
-				if v.surpresslightning then
-					render.SuppressEngineLighting(true)
-				end
-
+				if v.surpresslightning then render.SuppressEngineLighting(true) end
 				render.SetColorModulation(v.color.r / 255, v.color.g / 255, v.color.b / 255)
 				render.SetBlend(v.color.a / 255)
 				model:DrawModel()
 				render.SetBlend(1)
 				render.SetColorModulation(1, 1, 1)
-				if v.surpresslightning then
-					render.SuppressEngineLighting(false)
-				end
+				if v.surpresslightning then render.SuppressEngineLighting(false) end
 			elseif v.type == "Sprite" and sprite then
 				local drawpos = pos + ang:Forward() * v.pos.x + ang:Right() * v.pos.y + ang:Up() * v.pos.z
 				render.SetMaterial(sprite)
@@ -595,10 +515,7 @@ if CLIENT then
 
 	SWEP.wRenderOrder = nil
 	function SWEP:SCKDrawWorldModel()
-		if self.ShowWorldModel == nil or self.ShowWorldModel then
-			self:DrawModel()
-		end
-
+		if self.ShowWorldModel == nil or self.ShowWorldModel then self:DrawModel() end
 		if not self.WElements then return end
 		if not self.wRenderOrder then
 			self.wRenderOrder = {}
@@ -653,30 +570,20 @@ if CLIENT then
 					model:SetMaterial(v.material)
 				end
 
-				if v.skin and v.skin ~= model:GetSkin() then
-					model:SetSkin(v.skin)
-				end
-
+				if v.skin and v.skin ~= model:GetSkin() then model:SetSkin(v.skin) end
 				if v.bodygroup then
 					for k, v in pairs(v.bodygroup) do
-						if model:GetBodygroup(k) ~= v then
-							model:SetBodygroup(k, v)
-						end
+						if model:GetBodygroup(k) ~= v then model:SetBodygroup(k, v) end
 					end
 				end
 
-				if v.surpresslightning then
-					render.SuppressEngineLighting(true)
-				end
-
+				if v.surpresslightning then render.SuppressEngineLighting(true) end
 				render.SetColorModulation(v.color.r / 255, v.color.g / 255, v.color.b / 255)
 				render.SetBlend(v.color.a / 255)
 				model:DrawModel()
 				render.SetBlend(1)
 				render.SetColorModulation(1, 1, 1)
-				if v.surpresslightning then
-					render.SuppressEngineLighting(false)
-				end
+				if v.surpresslightning then render.SuppressEngineLighting(false) end
 			elseif v.type == "Sprite" and sprite then
 				local drawpos = pos + ang:Forward() * v.pos.x + ang:Right() * v.pos.y + ang:Up() * v.pos.z
 				render.SetMaterial(sprite)
@@ -711,15 +618,11 @@ if CLIENT then
 			if not bone then return end
 			pos, ang = Vector(0, 0, 0), Angle(0, 0, 0)
 			local m = ent:GetBoneMatrix(bone)
-			if m then
-				pos, ang = m:GetTranslation(), m:GetAngles()
-			end
-
+			if m then pos, ang = m:GetTranslation(), m:GetAngles() end
 			if IsValid(self:GetOwner()) and self:GetOwner():IsPlayer() and ent == self:GetOwner():GetViewModel() and self.ViewModelFlip then
 				ang.r = -ang.r -- Fixes mirrored models
 			end
 		end
-
 		return pos, ang
 	end
 
@@ -776,8 +679,8 @@ if CLIENT then
 					else
 						allbones[bonename] = {
 							scale = Vector(1, 1, 1),
-							pos = Vector(0, 0, 0),
-							angle = Angle(0, 0, 0)
+							pos = vector_origin,
+							angle = angle_zero
 						}
 					end
 				end
@@ -800,17 +703,9 @@ if CLIENT then
 					end
 				end
 
-				if vm:GetManipulateBoneScale(bone) ~= s then
-					vm:ManipulateBoneScale(bone, s)
-				end
-
-				if vm:GetManipulateBoneAngles(bone) ~= v.angle then
-					vm:ManipulateBoneAngles(bone, v.angle)
-				end
-
-				if vm:GetManipulateBonePosition(bone) ~= p then
-					vm:ManipulateBonePosition(bone, p)
-				end
+				if vm:GetManipulateBoneScale(bone) ~= s then vm:ManipulateBoneScale(bone, s) end
+				if vm:GetManipulateBoneAngles(bone) ~= v.angle then vm:ManipulateBoneAngles(bone, v.angle) end
+				if vm:GetManipulateBonePosition(bone) ~= p then vm:ManipulateBonePosition(bone, p) end
 			end
 		else
 			self:ResetBonePositions(vm)
@@ -821,8 +716,8 @@ if CLIENT then
 		if not vm:GetBoneCount() then return end
 		for i = 0, vm:GetBoneCount() do
 			vm:ManipulateBoneScale(i, Vector(1, 1, 1))
-			vm:ManipulateBoneAngles(i, Angle(0, 0, 0))
-			vm:ManipulateBonePosition(i, Vector(0, 0, 0))
+			vm:ManipulateBoneAngles(i, angle_zero)
+			vm:ManipulateBonePosition(i, vector_origin)
 		end
 	end
 end

@@ -1,8 +1,5 @@
 -- Mannytko 2024
-if SERVER then
-	AddCSLuaFile()
-end
-
+if SERVER then AddCSLuaFile() end
 ENT.Base = "ent_mann_mos_gun_base" -- Base
 -- Info
 ENT.PrintName = "M3 Mortar"
@@ -25,10 +22,7 @@ ENT.RPM = 90 / 60
 ENT.Recoil = 35
 ENT.MaxClip = 1
 ENT.ClipSize = 1
-if CLIENT then
-	language.Add("ent_mann_mos_gun_m3mortar", "M3 Mortar")
-end
-
+if CLIENT then language.Add("ent_mann_mos_gun_m3mortar", "M3 Mortar") end
 function ENT:Projectile_SpawnPos()
 	local att = self.Attachment
 	local pos
@@ -40,33 +34,24 @@ function ENT:Projectile_SpawnPos()
 		pos = self:WorldSpaceCenter()
 	end
 
-	if self.RangeProjectile_Offset then
-		pos = pos + self:GetForward()
-	end
-
+	if self.RangeProjectile_Offset then pos = pos + self:GetForward() end
 	return pos
 end
 
 function ENT:RangeAttackProjectileVelocity()
 	local Attachment = self:GetAttachment(self:LookupAttachment(self.Attachment or "muzzle_flash" or 1))
 	local startPos = Attachment.Pos
-	if self.Spread > 0 then
-		startPos = startPos + VectorRand() * self.Spread or 0
-	end
-
+	if self.Spread > 0 then startPos = startPos + VectorRand() * self.Spread or 0 end
 	return (startPos + self:GetRight() * 1000 - startPos):GetNormalized() * 2500
 end
 
 -------------------------------------
+local proj_clr = Color(111, 0, 255)
 function ENT:CustomShoot()
 	local Owner = JMod.GetEZowner(self)
-	if not IsValid(Owner) or not Owner:IsPlayer() or Owner == nil then
-		Owner = self:GetOwner() or self or game.GetWorld()
-	end
-
+	if not IsValid(Owner) or not Owner:IsPlayer() or Owner == nil then Owner = self:GetOwner() or self or game.GetWorld() end
 	if math.random(1, 6) == 4 then
 		self:Jam("electric", Owner)
-
 		return
 	end
 
@@ -82,6 +67,7 @@ function ENT:CustomShoot()
 	proj:SetAngles(shootAngles)
 	proj:SetOwner(Owner)
 	proj:Spawn()
+	proj:SetColor(proj_clr)
 	local proj_phys = proj:GetPhysicsObject()
 	if IsValid(proj_phys) then
 		proj_phys:SetVelocity(self:RangeAttackProjectileVelocity())
@@ -105,14 +91,8 @@ function ENT:CustomShoot()
 	util.Effect("ChopperMuzzleFlash", EffMuzzle)
 	-- Sound
 	self:EmitSound(self.Sound, 100, self.SNDPitch, 1, CHAN_WEAPON)
-	if self.ClipSize <= 1 and self.MaxClip > 1 then
-		self:EmitSound(Sound("jids/snd_jack_arcgunwarn.wav"), 75, self.SNDPitch, 1, CHAN_ITEM)
-	end
-
-	if Owner:IsPlayer() then
-		Owner:ViewPunch(AngleRand(-self.Recoil / 4, self.Recoil / 4))
-	end
-
+	if self.ClipSize <= 1 and self.MaxClip > 1 then self:EmitSound(Sound("jids/snd_jack_arcgunwarn.wav"), 75, self.SNDPitch, 1, CHAN_ITEM) end
+	if Owner:IsPlayer() then Owner:ViewPunch(AngleRand(-self.Recoil / 4, self.Recoil / 4)) end
 	if self.ClipSize > 0 then
 		self.ClipSize = self.ClipSize - 1
 		self:SetNWInt("MOS-ClipSize", self.ClipSize)

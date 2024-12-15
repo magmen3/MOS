@@ -1,8 +1,5 @@
 -- Mannytko 2024
-if SERVER then
-	AddCSLuaFile()
-end
-
+if SERVER then AddCSLuaFile() end
 -- M.A.N.N. Offense Solutions Melee Base
 -- Info
 ENT.Type = "anim"
@@ -37,7 +34,6 @@ if SERVER then
 		JMod.SetEZowner(ent, ply)
 		ent:Spawn()
 		ent:Activate()
-
 		return ent
 	end
 
@@ -76,17 +72,11 @@ if SERVER then
 	end
 
 	function ENT:Think()
-		if self:IsOnFire() then
-			self:Extinguish()
-		end
-
+		if self:IsOnFire() then self:Extinguish() end
 		local Owner = JMod.GetEZowner(self)
 		if not IsValid(Owner) or not Owner:IsPlayer() or Owner == nil then return end
 		local IsGrabbing = self:IsPlayerHolding() or (IsValid(Owner:GetActiveWeapon()) and Owner:GetActiveWeapon():GetClass() == "wep_jack_gmod_hands" and Owner:GetActiveWeapon().CarryEnt == self)
-		if not IsGrabbing then
-			oldholdtype = IsValid(Owner:GetActiveWeapon()) and Owner:GetActiveWeapon():GetHoldType()
-		end
-
+		if not IsGrabbing then oldholdtype = IsValid(Owner:GetActiveWeapon()) and Owner:GetActiveWeapon():GetHoldType() end
 		if IsValid(Owner:GetActiveWeapon()) and IsGrabbing then
 			Owner:GetActiveWeapon():SetHoldType(self.HoldType or "pistol")
 		elseif IsValid(Owner:GetActiveWeapon()) and not IsGrabbing then
@@ -94,17 +84,13 @@ if SERVER then
 		end
 
 		self:NextThink(CurTime() + .5)
-
 		return true
 	end
 
 	local dmgmul = GetConVar("MOS_DamageMul"):GetInt()
 	function ENT:DamageEnt(victim)
 		local Owner = JMod.GetEZowner(self)
-		if not IsValid(Owner) or not Owner:IsPlayer() or Owner == nil then
-			Owner = self:GetOwner() or self or game.GetWorld()
-		end
-
+		if not IsValid(Owner) or not Owner:IsPlayer() or Owner == nil then Owner = self:GetOwner() or self or game.GetWorld() end
 		-- Damage
 		local DMG = DamageInfo()
 		DMG:SetDamage(self.Damage * dmgmul)
@@ -135,10 +121,7 @@ if SERVER then
 	local NextAttack = 0
 	function ENT:PhysicsCollide(data, physobj)
 		local Owner = JMod.GetEZowner(self)
-		if not IsValid(Owner) or not Owner:IsPlayer() or Owner == nil then
-			Owner = self:GetOwner() or self or game.GetWorld()
-		end
-
+		if not IsValid(Owner) or not Owner:IsPlayer() or Owner == nil then Owner = self:GetOwner() or self or game.GetWorld() end
 		if NextAttack > CurTime() then return end
 		if data.DeltaTime > .3 and data.Speed >= 400 then
 			local Snd = self.ImpactSound or Sound("weapons/crowbar/crowbar_impact" .. math.random(1, 2) .. ".wav")
@@ -170,6 +153,4 @@ else
 	language.Add("ent_mann_mos_melee_base", "MOS Melee Base")
 end
 
-if SERVER then
-	MOS.Print(ENT.PrintName .. " Initialized!")
-end
+if SERVER then MOS.Print(ENT.PrintName .. " Initialized!") end

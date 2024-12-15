@@ -19,10 +19,21 @@ NPC.HasArmor = {
 NPC.BaseRangeAttack = false -- true -- Use ZBase range attack system
 NPC.RangeAttackFaceEnemy = false -- Should it face enemy while doing the range attack?
 NPC.RangeAttackTurnSpeed = 10 -- Speed that it turns while trying to face the enemy when range attacking
-NPC.RangeAttackDistance = {500, 1700} -- Distance that it initiates the range attack {min, max}
-NPC.RangeAttackCooldown = {4, 12} -- Range attack cooldown {min, max}
+NPC.RangeAttackDistance = {
+	500, -- Distance that it initiates the range attack {min, max}
+	1700
+}
+
+NPC.RangeAttackCooldown = {
+	4, -- Range attack cooldown {min, max}
+	12
+}
+
 NPC.RangeAttackSuppressEnemy = true -- If the enemy can't be seen, target the last seen position
-NPC.RangeAttackAnimations = {"grenadethrow"} -- Example: NPC.RangeAttackAnimations = {ACT_RANGE_ATTACK1}
+NPC.RangeAttackAnimations = {
+	"grenadethrow" -- Example: NPC.RangeAttackAnimations = {ACT_RANGE_ATTACK1}
+}
+
 NPC.RangeAttackAnimationSpeed = 1.4 -- Speed multiplier for the range attack animation
 -- Time until the projectile code is ran
 -- Set to false to disable the timer (if you want to use animation events instead for example)
@@ -37,7 +48,10 @@ NPC.RangeProjectile_Inaccuracy = 15 -- Inaccuracy, 0 = perfect, higher numbers =
 NPC.BaseMeleeAttack = true
 NPC.MeleeDamage_Delay = .6
 NPC.MeleeAttackAnimations = {"kickdoorbaton"}
-NPC.MeleeWeaponAnimations = {"kickdoorbaton"} -- Animations to use when attacking with a melee weapon
+NPC.MeleeWeaponAnimations = {
+	"kickdoorbaton" -- Animations to use when attacking with a melee weapon
+}
+
 NPC.OnMeleeSound_Chance = 2
 NPC.OnRangeSound_Chance = 3
 ---------------------------------------
@@ -69,7 +83,7 @@ NPC.ItemDrops = {
 		chance = 7,
 		max = 1
 	},
-		--[["ent_jack_gmod_ezfragnade"] = {
+	--[["ent_jack_gmod_ezfragnade"] = {
 		chance = 9,
 		max = 1
 	},]]
@@ -104,13 +118,10 @@ local ShouldHaveRadioSound = {
 function NPC:CustomOnSoundEmitted(sndData, duration, sndVarName)
 	if ShouldHaveRadioSound[sndVarName] then
 		self:EmitSound("npc/metropolice/vo/on" .. math.random(1, 2) .. ".wav", 75, math.random(105, 110))
-		timer.Simple(
-			duration,
-			function()
-				if not IsValid(self) then return end
-				self:EmitSound("npc/metropolice/vo/off" .. math.random(1, 4) .. ".wav", 75, math.random(105, 110))
-			end
-		)
+		timer.Simple(duration, function()
+			if not IsValid(self) then return end
+			self:EmitSound("npc/metropolice/vo/off" .. math.random(1, 4) .. ".wav", 75, math.random(105, 110))
+		end)
 	end
 end
 --]]==============================================================================================]]

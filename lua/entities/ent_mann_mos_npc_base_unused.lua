@@ -1,8 +1,5 @@
 -- Mannytko 2024
-if SERVER then
-	AddCSLuaFile()
-end
-
+if SERVER then AddCSLuaFile() end
 -- I'm too lazy to complete this
 -- UPD 04.01.2024 - It's completely useless now, since ZBase by Zippy is out, and i'll be making npcs based on it. i'll leave it here for future developments.
 ENT.Base = "base_nextbot"
@@ -51,22 +48,13 @@ function ENT:RunBehaviour()
 		self.loco:SetJumpGapsAllowed(true)
 		local targetPos = self:GetPos() + Vector(math.Rand(-1, 1), math.Rand(-1, 1), 0) * 5000
 		local area = navmesh.GetNearestNavArea(targetPos)
-		if IsValid(area) then
-			targetPos = area:GetClosestPointOnArea(targetPos)
-		end
-
-		if targetPos then
-			self:MoveToPos(targetPos)
-		end
-
+		if IsValid(area) then targetPos = area:GetClosestPointOnArea(targetPos) end
+		if targetPos then self:MoveToPos(targetPos) end
 		if self.Panic then
-			local pos = self:FindSpot(
-				"random",
-				{
-					type = "hiding",
-					radius = 5000
-				}
-			)
+			local pos = self:FindSpot("random", {
+				type = "hiding",
+				radius = 5000
+			})
 
 			if pos then
 				-- self:PlayScene("scenes/npc/male01/watchout.vcd")
@@ -120,13 +108,10 @@ function ENT:OnInjured()
 		self:StartActivity(ACT_RUN_PANICKED or 2053)
 		self.loco:SetDesiredSpeed(300)
 		self.Panic = true
-		timer.Simple(
-			math.random(25, 45),
-			function()
-				if not IsValid(self) then return end
-				self.Panic = false
-			end
-		)
+		timer.Simple(math.random(25, 45), function()
+			if not IsValid(self) then return end
+			self.Panic = false
+		end)
 	end
 end
 
@@ -140,28 +125,20 @@ end
 
 function ENT:OnStuck()
 	self.loco:Jump()
-	timer.Simple(
-		.3,
-		function()
-			if not IsValid(self) then return end
-			self:StartActivity(ACT_JUMP or 30)
-			self.loco:SetVelocity(self:GetForward() * 200 + Vector(0, 0, 100))
-			self:EmitSound("npc/footsteps/hardboot_generic4.wav", 80, math.random(95, 110))
-		end
-	)
+	timer.Simple(.3, function()
+		if not IsValid(self) then return end
+		self:StartActivity(ACT_JUMP or 30)
+		self.loco:SetVelocity(self:GetForward() * 200 + Vector(0, 0, 100))
+		self:EmitSound("npc/footsteps/hardboot_generic4.wav", 80, math.random(95, 110))
+	end)
 end
 
 function ENT:OnUnStuck()
-	timer.Simple(
-		1,
-		function()
-			if not IsValid(self) then return end
-			self:StartActivity(self.Panic and ACT_RUN_PANICKED or ACT_WALK)
-			self:EmitSound("npc/footsteps/hardboot_generic1.wav", 80, math.random(95, 110))
-		end
-	)
+	timer.Simple(1, function()
+		if not IsValid(self) then return end
+		self:StartActivity(self.Panic and ACT_RUN_PANICKED or ACT_WALK)
+		self:EmitSound("npc/footsteps/hardboot_generic1.wav", 80, math.random(95, 110))
+	end)
 end
 
-if CLIENT then
-	language.Add("ent_mann_mos_npc_base", "MOS NPC Base")
-end
+if CLIENT then language.Add("ent_mann_mos_npc_base", "MOS NPC Base") end

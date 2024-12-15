@@ -1,8 +1,5 @@
 -- Mannytko 2024
-if SERVER then
-	AddCSLuaFile()
-end
-
+if SERVER then AddCSLuaFile() end
 ENT.Type = "anim"
 ENT.PrintName = "EZ Advanced Fabricator"
 ENT.Author = "Mannytko"
@@ -57,10 +54,7 @@ if SERVER then
 			phys:SetMaterial("Combine_metal")
 		end
 
-		if not self.EZowner then
-			self:SetColor(Color(45, 101, 153))
-		end
-
+		if not self.EZowner then self:SetColor(Color(45, 101, 153)) end
 		self:UpdateConfig()
 		if self.SpawnFull then
 			self:SetChemicals(self.MaxChemicals)
@@ -78,10 +72,7 @@ if SERVER then
 		local WireOutputs = {"State [NORMAL]"}
 		local WireOutputDesc = {"The state of the machine \n-1 is broken \n0 is fine"}
 		for _, typ in ipairs(self.EZconsumes) do
-			if typ == JMod.EZ_RESOURCE_TYPES.BASICPARTS then
-				typ = "Durability"
-			end
-
+			if typ == JMod.EZ_RESOURCE_TYPES.BASICPARTS then typ = "Durability" end
 			local ResourceName = string.Replace(typ, " ", "")
 			local ResourceDesc = "Amount of " .. ResourceName .. " left"
 			local OutResourceName = string.gsub(ResourceName, "^%l", string.upper) .. " [NORMAL]"
@@ -125,7 +116,6 @@ if SERVER then
 		local ItemInfo = self.Craftables[itemName]
 		if not (self:GetElectricity() >= 10) or not (self:GetWater() >= 4) or not (self:GetChemicals() >= 4) then
 			JMod.Hint(ply, "refill")
-
 			return
 		end
 
@@ -133,38 +123,31 @@ if SERVER then
 			local override, msg = hook.Run("JMod_CanWorkbenchBuild", ply, workbench, itemName)
 			if override == false then
 				ply:PrintMessage(HUD_PRINTCENTER, msg or "cannot build")
-
 				return
 			end
 
 			local Pos, Ang, BuildSteps = self:GetPos() + self:GetUp() * 75 - self:GetForward() * 10 - self:GetRight() * 5, self:GetAngles(), 10
 			JMod.ConsumeResourcesInRange(ItemInfo.craftingReqs, Pos, nil, self, true)
-			timer.Simple(
-				1,
-				function()
-					if IsValid(self) then
-						for i = 1, BuildSteps do
-							timer.Simple(
-								i / 100,
-								function()
-									if IsValid(self) then
-										if i < BuildSteps then
-											sound.Play("snds_jack_gmod/ez_robotics/" .. math.random(1, 42) .. ".wav", Pos, 60, math.random(80, 120))
-										else
-											JMod.BuildRecipe(ItemInfo.results, ply, Pos, Ang, ItemInfo.skin)
-											JMod.BuildEffect(Pos)
-											self:SetElectricity(math.Clamp(self:GetElectricity() - 15, 0.0, self.MaxElectricity))
-											self:SetWater(math.Clamp(self:GetWater() - 5, 0.0, self.MaxWater))
-											self:SetChemicals(math.Clamp(self:GetChemicals() - 5, 0.0, self.MaxChemicals))
-											self:UpdateWireOutputs()
-										end
-									end
+			timer.Simple(1, function()
+				if IsValid(self) then
+					for i = 1, BuildSteps do
+						timer.Simple(i / 100, function()
+							if IsValid(self) then
+								if i < BuildSteps then
+									sound.Play("snds_jack_gmod/ez_robotics/" .. math.random(1, 42) .. ".ogg", Pos, 60, math.random(80, 120))
+								else
+									JMod.BuildRecipe(ItemInfo.results, ply, Pos, Ang, ItemInfo.skin)
+									JMod.BuildEffect(Pos)
+									self:SetElectricity(math.Clamp(self:GetElectricity() - 15, 0.0, self.MaxElectricity))
+									self:SetWater(math.Clamp(self:GetWater() - 5, 0.0, self.MaxWater))
+									self:SetChemicals(math.Clamp(self:GetChemicals() - 5, 0.0, self.MaxChemicals))
+									self:UpdateWireOutputs()
 								end
-							)
-						end
+							end
+						end)
 					end
 				end
-			)
+			end)
 		else
 			JMod.Hint(ply, "missing supplies")
 		end
@@ -200,14 +183,8 @@ elseif CLIENT then
 		if (not DetailDraw) and Obscured then return end
 		-- if player is far and sentry is obscured, draw nothing
 		-- if obscured, at least disable details
-		if Obscured then
-			DetailDraw = false
-		end
-
-		if self:GetState() < 0 then
-			DetailDraw = false
-		end
-
+		if Obscured then DetailDraw = false end
+		if self:GetState() < 0 then DetailDraw = false end
 		self:DrawModel()
 		if DetailDraw then
 			if self:GetElectricity() > 0 then

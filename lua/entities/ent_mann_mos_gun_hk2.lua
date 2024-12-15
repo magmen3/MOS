@@ -1,8 +1,5 @@
 -- Mannytko 2024
-if SERVER then
-	AddCSLuaFile()
-end
-
+if SERVER then AddCSLuaFile() end
 ENT.Base = "ent_mann_mos_gun_base" -- Base
 -- Info
 ENT.PrintName = "HKII MGN"
@@ -29,6 +26,4 @@ ENT.RPM = 42 / 60
 ENT.Recoil = 12
 ENT.MaxClip = 8
 ENT.ClipSize = 8
-if CLIENT then
-	language.Add("ent_mann_mos_gun_hk2", "HKII Magnum")
-end
+if CLIENT then language.Add("ent_mann_mos_gun_hk2", "HKII Magnum") end

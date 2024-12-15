@@ -59,12 +59,12 @@ JMod.MOSArmorTable["RegularSoldier-Armor"] = {
 		leftforearm = 1
 	},
 	snds = {
-		eq = "snds_jack_gmod/ez_robotics/11.wav",
-		uneq = "snds_jack_gmod/ez_robotics/12.wav"
+		eq = "snds_jack_gmod/ez_robotics/11.ogg",
+		uneq = "snds_jack_gmod/ez_robotics/12.ogg"
 	},
 	def = HeavyArmorProfile,
 	plymdl = "models/mos/npcs/frosty/sparbine_players/mos_regularsoldier_pm.mdl",
-	sndlop = "", -- "snds_jack_gmod/mask_breathe.wav"
+	sndlop = "", -- "snds_jack_gmod/mask_breathe.ogg"
 	wgt = 60,
 	dur = 600,
 	ent = "ent_jack_gmod_ezarmor_mosregulararmor"
@@ -99,12 +99,12 @@ JMod.MOSArmorTable["RebelSoldier-Armor"] = {
 		leftforearm = 1
 	},
 	snds = {
-		eq = "snds_jack_gmod/ez_robotics/11.wav",
-		uneq = "snds_jack_gmod/ez_robotics/12.wav"
+		eq = "snds_jack_gmod/ez_robotics/11.ogg",
+		uneq = "snds_jack_gmod/ez_robotics/12.ogg"
 	},
 	def = HeavyArmorProfile,
 	plymdl = "models/mos/npcs/frosty/sparbine_players/mos_rebelsoldier_pm.mdl",
-	sndlop = "", -- "snds_jack_gmod/mask_breathe.wav"
+	sndlop = "", -- "snds_jack_gmod/mask_breathe.ogg"
 	wgt = 65,
 	dur = 750,
 	ent = "ent_jack_gmod_ezarmor_mosrebelarmor"
@@ -139,12 +139,12 @@ JMod.MOSArmorTable["Security-Armor"] = {
 		leftforearm = 1
 	},
 	snds = {
-		eq = "snds_jack_gmod/ez_robotics/11.wav",
-		uneq = "snds_jack_gmod/ez_robotics/12.wav"
+		eq = "snds_jack_gmod/ez_robotics/11.ogg",
+		uneq = "snds_jack_gmod/ez_robotics/12.ogg"
 	},
 	def = MediumArmorProfile,
 	plymdl = "models/mos/npcs/frosty/sparbine_players/mos_security_pm.mdl",
-	sndlop = "", -- "snds_jack_gmod/mask_breathe.wav"
+	sndlop = "", -- "snds_jack_gmod/mask_breathe.ogg"
 	wgt = 40,
 	dur = 500,
 	ent = "ent_jack_gmod_ezarmor_mossecurityarmor"

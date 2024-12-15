@@ -1,8 +1,5 @@
 -- Mannytko 2024
-if SERVER then
-	AddCSLuaFile()
-end
-
+if SERVER then AddCSLuaFile() end
 SWEP.Base = "wep_mann_mos_gun_base"
 SWEP.Category = "M.A.N.N. Offense Solutions - Weapons"
 SWEP.PrintName = "SMG-25"

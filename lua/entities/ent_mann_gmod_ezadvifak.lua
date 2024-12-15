@@ -1,8 +1,5 @@
 ﻿-- Mannytko 2024
-if SERVER then
-	AddCSLuaFile()
-end
-
+if SERVER then AddCSLuaFile() end
 ENT.Type = "anim"
 ENT.Author = "Mannytko"
 ENT.Category = "M.A.N.N. Offense Solutions - Misc"
@@ -19,7 +16,6 @@ if SERVER then
 		ent:SetPos(SpawnPos)
 		ent:Spawn()
 		ent:Activate()
-
 		return ent
 	end
 
@@ -38,9 +34,7 @@ if SERVER then
 	end
 
 	function ENT:PhysicsCollide(data, physobj)
-		if data.DeltaTime > .3 and data.Speed > 65 then
-			self:EmitSound("SolidMetal.ImpactSoft")
-		end
+		if data.DeltaTime > .3 and data.Speed > 65 then self:EmitSound("SolidMetal.ImpactSoft") end
 	end
 
 	function ENT:OnTakeDamage(dmginfo)
@@ -63,13 +57,13 @@ if SERVER then
 			activator.EZhealth = activator.EZhealth or 0
 			local Missing = Max - (Helf + activator.EZhealth)
 			if Missing > 0 then
-				local AddAmt = math.min(Missing, 15 * JMod.Config.Tools.Medkit.HealMult)
-				for i = 1, 3 do
-					activator:EmitSound("snds_jack_gmod/ez_medical/" .. math.random(1, 12) .. ".wav", 60, math.random(90, 110))
+				local AddAmt = math.min(Missing, 20 * JMod.Config.Tools.Medkit.HealMult)
+				for i = 1, 4 do
+					activator:EmitSound("snds_jack_gmod/ez_medical/" .. math.random(1, 12) .. ".ogg", 60, math.random(90, 110))
 				end
 
 				if activator.EZnutrition.Nutrients < 20 then
-					JMod.ConsumeNutrients(activator, math.random(6, 8)) -- analog of "food boost" from homicide
+					JMod.ConsumeNutrients(activator, math.random(6, 12)) -- analog of "food boost" from homicide
 				end
 
 				activator.EZhealth = activator.EZhealth + AddAmt
@@ -77,17 +71,14 @@ if SERVER then
 			end
 
 			if activator.EZbleeding and (activator.EZbleeding > 0) then
-				for i = 1, 3 do
-					activator:EmitSound("snds_jack_gmod/ez_medical/" .. math.random(4, 8) .. ".wav", 60, math.random(90, 110))
+				for i = 1, 4 do
+					activator:EmitSound("snds_jack_gmod/ez_medical/" .. math.random(4, 8) .. ".ogg", 60, math.random(90, 110))
 				end
 
 				activator:PrintMessage(HUD_PRINTCENTER, "stopping bleeding")
 				activator.EZbleeding = math.Clamp(activator.EZbleeding - JMod.Config.Tools.Medkit.HealMult * 80, 0, 9e9)
-				if activator.EZnutrition.Nutrients < 20 then
-					JMod.ConsumeNutrients(activator, math.random(4, 6))
-				end
-
-				activator:ViewPunch(Angle(math.Rand(-2, 2), math.Rand(-2, 2), math.Rand(-2, 2)))
+				if activator.EZnutrition.Nutrients < 20 then JMod.ConsumeNutrients(activator, math.random(4, 8)) end
+				activator:ViewPunch(AngleRand(-2, 2))
 				self:Remove()
 			end
 		else
